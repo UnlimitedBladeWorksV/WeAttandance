@@ -1,0 +1,578 @@
+{
+	"index.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"page/homePage.html": {
+		"resources": [
+			"images/updateImg.png",
+			"images/headImg.jpg",
+			"images/sign.png",
+			"js/mui.min.js",
+			"images/checkImg.png",
+			"images/aboutUs.png",
+			"images/personalImg.png",
+			"images/right.png",
+			"css/mui.min.css",
+			"images/passwordImg.png",
+			"images/manager.png",
+			"images/timeBg.jpg",
+			"images/headBg.jpg",
+			"js/jquery-3.2.1.min.js"
+		],
+		"refer": [
+			"page/signPage.html",
+			"page/orgManager.html",
+			"page/modifyMessage.html",
+			"page/attCondition.html",
+			"page/asdf.html",
+			"page/modifyPassword.html",
+			"page/scan/scanQRjoinOrg.html",
+			"page/scan/scanQRCode.html"
+		]
+	},
+	"page/signPage.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"page/orgManager.html": {
+		"resources": [
+			"images/back.png",
+			"images/joinOrg.png",
+			"images/createOrg.png",
+			"images/delete.png"
+		],
+		"refer": [
+			"page/joinOrg.html",
+			"page/createOrg.html"
+		]
+	},
+	"page/login.html": {
+		"resources": [
+			"js/mui.min.js",
+			"images/logo.jpg",
+			"css/mui.min.css",
+			"js/jquery-3.2.1.min.js",
+			"js/config.js"
+		],
+		"refer": [
+			"page/homePage.html",
+			"page/forgetPassword.html",
+			"page/register.html"
+		]
+	},
+	"page/createOrg.html": {
+		"resources": [
+			"images/createOrg2.png",
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"images/createOrg.png",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": [
+			"page/createOrg2.html",
+			"page/orgManager2.html",
+			"page/createAtt.html",
+			"page/attend/createAtt.html",
+			"page/attendOrg/createOrg.html"
+		]
+	},
+	"page/joinOrg.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"images/right.png",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": []
+	},
+	"page/forgetPassword.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/jquery-3.2.1.min.js",
+			"js/config.js"
+		],
+		"refer": [
+			"page/inputNewPassword.html"
+		]
+	},
+	"page/inputNewPassword.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/jquery-3.2.1.min.js",
+			"js/config.js"
+		],
+		"refer": [
+			"page/login.html"
+		]
+	},
+	"page/test/index.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"page/test/search.html"
+		]
+	},
+	"page/test/search.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"page/createOrg2.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": []
+	},
+	"index2.html": {
+		"resources": [
+			"js/config.js",
+			"js/mui.min.js"
+		],
+		"refer": [
+			"page/homePage.html",
+			"page/login.html"
+		]
+	},
+	"page/modifyMessage.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		],
+		"refer": []
+	},
+	"page/seeAttance.html": {
+		"resources": [
+			"images/record.png",
+			"images/back.png",
+			"images/createOrg.png",
+			"images/delete.png"
+		],
+		"refer": [
+			"page/check/attRecord.html",
+			"page/org_attRecord.html"
+		]
+	},
+	"page/attCondition.html": {
+		"refer": [
+			"page/seeAttance.html",
+			"page/lateAbsence.html"
+		],
+		"resources": [
+			"fonts/mui.ttf"
+		]
+	},
+	"page/check/attRecord.html": {
+		"resources": [
+			"js/calendar.js",
+			"css/calendar.css"
+		],
+		"refer": []
+	},
+	"page/org_attRecord.html": {
+		"resources": [
+			"js/mui.picker.min.js",
+			"css/mui.picker.min.css"
+		],
+		"refer": []
+	},
+	"page/orgManager2.html": {
+		"resources": [
+			"images/qrcode.png",
+			"images/people.png",
+			"images/add.png",
+			"images/delete2.png",
+			"js/mui.min.js",
+			"images/right.png",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": [
+			"page/scan/scanQRjoinOrg.html",
+			"page/scan/orgQrCode.html",
+			"page/scan/attendCode.html",
+			"page/scan/ss.html"
+		]
+	},
+	"page/modifyPassword.html": {
+		"resources": [
+			"fonts/mui.ttf"
+		],
+		"refer": []
+	},
+	"page/login/login.html": {
+		"resources": [
+			"images/icon_close.png",
+			"images/logo.png",
+			"js/mui.min.js",
+			"js/jquery-3.2.1.min.js",
+			"images/without.png",
+			"js/config.js",
+			"images/icon_tips.png",
+			"page/login/forgetPw.html",
+			"page/login/newPw.html",
+			"page/login/register.html"
+		],
+		"refer": [
+			"page/homePage.html",
+			"page/attend/createAtt.html",
+			"page/index/home.html",
+			"page/login/forgetPw.html",
+			"page/login/register.html"
+		]
+	},
+	"page/login/forgetPw.html": {
+		"resources": [
+			"images/log_reg_back.png",
+			"page/login/login.html"
+		],
+		"refer": [
+			"page/login/login.html",
+			"page/login/newPw.html"
+		]
+	},
+	"page/login/newPw.html": {
+		"refer": [
+			"page/login/login.html"
+		],
+		"resources": [
+			"page/login/login.html"
+		]
+	},
+	"page/attend/createAtt.html": {
+		"resources": [
+			"images/log_reg_back.png",
+			"images/icon_close.png",
+			"images/icon_tips.png"
+		],
+		"refer": []
+	},
+	"page/scan/orgQrCode.html": {
+		"resources": [
+			"js/qrcode/qrcode.js",
+			"js/qrcode/jquery.qrcode.js",
+			"js/qrcode/jquery-1.4.2.min.js",
+			"images/share.png",
+			"js/mui.min.js",
+			"images/delete.png",
+			"js/config.js"
+		],
+		"refer": []
+	},
+	"page/scan/scanQRjoinOrg.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/config.js"
+		],
+		"refer": [
+			"page/joinOrg.html",
+			"page/scan/orgQrCode.html",
+			"page/asdf.html",
+			"page/attCondition.html",
+			"page/scan/ss.html"
+		]
+	},
+	"page/scan/attendCode.html": {
+		"resources": [
+			"js/qrcode/qrcode.js",
+			"js/qrcode/jquery.qrcode.js",
+			"js/qrcode/jquery-1.4.2.min.js",
+			"images/share.png",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"images/delete.png",
+			"js/config.js"
+		],
+		"refer": []
+	},
+	"page/index/home.html": {
+		"resources": [
+			"images/user.png",
+			"images/create_org.png",
+			"images/add_org.png",
+			"images/scan.png",
+			"images/attend.png",
+			"images/alter_pw.png",
+			"images/export_table.png",
+			"images/att_record.png",
+			"images/about_us.png",
+			"images/headImg.jpg",
+			"images/create_att.png",
+			"css/mui.min.css",
+			"images/exit.png",
+			"images/check_update.png",
+			"images/user_message.png",
+			"js/mui.min.js",
+			"js/jquery-3.2.1.min.js",
+			"js/config.js",
+			"page/attendOrg/myJoinOrg.html",
+			"images/feedback.png"
+		],
+		"refer": [
+			"page/attRecord/seeAttance.html",
+			"page/attendOrg/myJoinOrg.html",
+			"page/attendOrg/myCreateOrg.html",
+			"page/index/alterUserData.html",
+			"page/index/alterPw.html",
+			"page/attend/createAtt.html",
+			"page/scan/scanQRCode.html",
+			"page/index/sign.html",
+			"page/login/login.html",
+			"page/index/feedback.html"
+		]
+	},
+	"page/attRecord/seeAttance.html": {
+		"refer": [
+			"page/attRecord/org_attRecord.html",
+			"page/attRecord/attRecord.html"
+		],
+		"resources": [
+			"images/back.png",
+			"images/createOrg.png",
+			"images/record.png",
+			"images/delete.png",
+			"css/mui.min.css"
+		]
+	},
+	"page/attRecord/org_attRecord.html": {
+		"resources": [
+			"js/mui.picker.min.js",
+			"fonts/mui.ttf",
+			"css/mui.picker.min.css",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/config.js",
+			"images/log_reg_back.png"
+		],
+		"refer": [
+			"page/people/peopleNumber.html"
+		]
+	},
+	"page/attendOrg/myJoinOrg.html": {
+		"resources": [
+			"images/right.png",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/config.js",
+			"images/log_reg_back.png",
+			"images/search.png",
+			"page/index/home.html",
+			"js/jquery-3.2.1.min.js",
+			"page/attendOrg/myOrgDetail.html"
+		],
+		"refer": [
+			"page/index/home.html",
+			"page/scan/scanQRCode.html",
+			"page/attendOrg/myOrgDetail.html"
+		]
+	},
+	"page/people/peopleNumber.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": []
+	},
+	"page/attRecord/attRecord.html": {
+		"resources": [
+			"js/calendar.js",
+			"css/calendar.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/config.js",
+			"images/log_reg_back.png"
+		],
+		"refer": []
+	},
+	"page/index/alterUserData.html": {
+		"resources": [
+			"images/log_reg_back.png",
+			"js/mui.min.js",
+			"js/config.js",
+			"images/icon_tips.png",
+			"js/jquery-3.2.1.min.js"
+		],
+		"refer": []
+	},
+	"page/attendOrg/myCreateOrg.html": {
+		"resources": [
+			"images/right.png",
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/config.js",
+			"images/log_reg_back.png",
+			"page/attendOrg/createOrg.html",
+			"images/add.png",
+			"images/search.png"
+		],
+		"refer": [
+			"page/attendOrg/myOrgDetail.html",
+			"page/attendOrg/createOrg.html"
+		]
+	},
+	"page/index/alterPw.html": {
+		"resources": [
+			"images/icon_close.png",
+			"images/log_reg_back.png",
+			"js/mui.min.js",
+			"js/jquery-3.2.1.min.js",
+			"js/config.js",
+			"images/icon_tips.png"
+		],
+		"refer": [
+			"page/index/home.html"
+		]
+	},
+	"page/attendOrg/myOrgDetail.html": {
+		"resources": [
+			"images/qrcode.png",
+			"images/people.png",
+			"images/add.png",
+			"images/delete2.png",
+			"images/log_reg_back.png",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/config.js",
+			"images/delete.png",
+			"images/delete_org.png",
+			"images/share_scan.png",
+			"images/uesr_manage.png",
+			"images/new_att.png",
+			"page/attendOrg/myJoinOrg.html"
+		],
+		"refer": [
+			"page/scan/attendCode.html",
+			"page/scan/orgQrCode.html",
+			"page/attendOrg/myJoinOrg.html",
+			"page/attend/createAtt.html",
+			"page/people/orgPeople.html",
+			"page/attendOrg/myCreateOrg.html"
+		]
+	},
+	"page/attendOrg/createOrg.html": {
+		"resources": [
+			"page/attendOrg/myCreateOrg.html",
+			"images/icon_close.png",
+			"images/icon_tips.png"
+		],
+		"refer": [
+			"page/attendOrg/myCreateOrg.html",
+			"page/index/home.html"
+		]
+	},
+	"page/test/test2.html": {
+		"resources": [
+			"js/mui.min.js",
+			"js/qrcode/qrcode.js",
+			"js/qrcode/jquery.qrcode.js",
+			"css/mui.min.css",
+			"js/qrcode/jquery-1.4.2.min.js",
+			"images/delete.png",
+			"js/config.js"
+		],
+		"refer": []
+	},
+	"page/scan/scanQRCode.html": {
+		"refer": [
+			"page/index/alterPw.html",
+			"page/scan/orgQrCode.html",
+			"page/scan/signSuccess.html",
+			"page/attendOrg/myJoinOrg.html"
+		],
+		"resources": []
+	},
+	"page/index/sign.html": {
+		"resources": [
+			"images/log_reg_back.png",
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"js/jquery-3.2.1.min.js",
+			"js/config.js",
+			"page/index/home.html"
+		],
+		"refer": [
+			"page/scan/scanQRCode.html",
+			"page/index/home.html"
+		]
+	},
+	"page/people/orgPeople.html": {
+		"resources": [
+			"page/index/home.html",
+			"images/log_reg_back.png",
+			"js/mui.min.js",
+			"js/jquery-3.2.1.min.js",
+			"js/config.js"
+		],
+		"refer": [
+			"page/index/home.html"
+		]
+	},
+	"page/index/welcome.html": {
+		"resources": [
+			"images/welcome.jpg",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/config.js"
+		],
+		"refer": [
+			"page/index/home.html",
+			"page/login/login.html"
+		]
+	},
+	"page/login/register.html": {
+		"resources": [
+			"images/log_reg_back.png",
+			"images/icon_close.png",
+			"js/mui.min.js",
+			"js/jquery-3.2.1.min.js",
+			"js/config.js",
+			"images/icon_tips.png",
+			"page/login/login.html"
+		],
+		"refer": [
+			"page/login/login.html"
+		]
+	},
+	"page/index/feedback.html": {
+		"resources": [
+			"page/index/home.html",
+			"images/icon_close.png",
+			"css/mui.min.css",
+			"images/log_reg_back.png"
+		],
+		"refer": [
+			"page/index/home.html"
+		]
+	},
+	"page/scan/signSuccess.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.min.js"
+		]
+	}
+}

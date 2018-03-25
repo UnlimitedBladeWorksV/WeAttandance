@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.attend.mapper.VerificationRegisterEmailMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.attend.domain.entity.VerificationRegisterEmail" >
+    <constructor >
+      <idArg column="VERI_EMAIL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="VERI_CODE" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="VERI_OVERDUE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="VERI_IS_REGISTERED" jdbcType="BIT" javaType="java.lang.Boolean" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    VERI_EMAIL, VERI_CODE, VERI_OVERDUE, VERI_IS_REGISTERED
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_verification_register_email
+    where VERI_EMAIL = #{veriEmail,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_verification_register_email
+    where VERI_EMAIL = #{veriEmail,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.demo.attend.domain.entity.VerificationRegisterEmail" >
+    insert into t_verification_register_email (VERI_EMAIL, VERI_CODE, VERI_OVERDUE, 
+      VERI_IS_REGISTERED)
+    values (#{veriEmail,jdbcType=VARCHAR}, #{veriCode,jdbcType=INTEGER}, #{veriOverdue,jdbcType=TIMESTAMP}, 
+      #{veriIsRegistered,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.attend.domain.entity.VerificationRegisterEmail" >
+    insert into t_verification_register_email
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="veriEmail != null" >
+        VERI_EMAIL,
+      </if>
+      <if test="veriCode != null" >
+        VERI_CODE,
+      </if>
+      <if test="veriOverdue != null" >
+        VERI_OVERDUE,
+      </if>
+      <if test="veriIsRegistered != null" >
+        VERI_IS_REGISTERED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="veriEmail != null" >
+        #{veriEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="veriCode != null" >
+        #{veriCode,jdbcType=INTEGER},
+      </if>
+      <if test="veriOverdue != null" >
+        #{veriOverdue,jdbcType=TIMESTAMP},
+      </if>
+      <if test="veriIsRegistered != null" >
+        #{veriIsRegistered,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.attend.domain.entity.VerificationRegisterEmail" >
+    update t_verification_register_email
+    <set >
+      <if test="veriCode != null" >
+        VERI_CODE = #{veriCode,jdbcType=INTEGER},
+      </if>
+      <if test="veriOverdue != null" >
+        VERI_OVERDUE = #{veriOverdue,jdbcType=TIMESTAMP},
+      </if>
+      <if test="veriIsRegistered != null" >
+        VERI_IS_REGISTERED = #{veriIsRegistered,jdbcType=BIT},
+      </if>
+    </set>
+    where VERI_EMAIL = #{veriEmail,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.attend.domain.entity.VerificationRegisterEmail" >
+    update t_verification_register_email
+    set VERI_CODE = #{veriCode,jdbcType=INTEGER},
+      VERI_OVERDUE = #{veriOverdue,jdbcType=TIMESTAMP},
+      VERI_IS_REGISTERED = #{veriIsRegistered,jdbcType=BIT}
+    where VERI_EMAIL = #{veriEmail,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

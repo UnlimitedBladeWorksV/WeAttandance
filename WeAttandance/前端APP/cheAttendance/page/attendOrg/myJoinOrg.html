@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<script src="../../js/mui.min.js">	</script>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/jquery-3.2.1.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<style>
+			blockquote,body,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,html,iframe,input,legend,li,ol,p,pre,td,textarea,th,ul {
+				padding: 0;
+				margin: 0
+			}
+			
+			html {
+				-webkit-overflow-scrolling: touch;
+				-webkit-text-size-adjust: 100%;
+				overflow-y: hidden;
+			}
+			
+			body {
+				-webkit-overflow-scrolling: touch;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				overflow-y: hidden;
+			}
+			
+			a,body,input,input:focus,select,select:focus,textarea,textarea:focus {
+				-webkit-tap-highlight-color: transparent;
+				outline: 0;
+			}
+			
+			li {
+				list-style-type: none
+			}
+			
+			table {
+				border-collapse: collapse;
+				border-spacing: 0
+			}
+			
+			fieldset {
+				border: none
+			}
+			
+			legend {
+				display: none
+			}
+			
+			a:active,a:hover,button {
+				outline: 0
+			}
+			
+			input[type=checkbox],input[type=radio] {
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			
+			em,i {
+				font-style: normal;
+			}
+			
+			a {
+				text-decoration: none;
+				-webkit-tap-highlight-color: transparent
+			}
+			
+			body {
+				font-family: '微软雅黑';
+				background: #F3F3F3
+			}
+			
+			.header {
+				position: fixed;
+				width: 100%;
+				height: 3rem;
+				line-height: 3rem;
+				background: #1389FE;
+				font-size: 1rem;
+				color: #fff;
+				text-align: center;
+				z-index: 9999;
+			}
+			
+			.back {
+				padding-left: 1.125rem;
+				position: absolute;
+				top: 0;
+				left: 0
+			}
+			
+			.back i {
+				width: .75rem;
+				height: 1.25rem;
+				margin-top: .875rem;
+				background: url(../../images/log_reg_back.png) no-repeat;
+				background-size: 100%;
+				display: block
+			}
+			
+			li{
+				margin-left:0.3rem ;
+				margin-right: 0.3rem;
+				margin-bottom:0rem;
+				background-color: #ffffff;
+				line-height: 1.6rem;
+			}
+			.p1{
+				font-size: 1rem;
+				padding-top:0.25rem;
+				margin: 0.1rem 1rem 0.1rem;
+			}
+			.p2{
+				font-size: 0.75rem;
+				padding-bottom: 0.18rem;
+				margin: 0.15rem 1rem 0.15rem;
+				color: #777;
+			}
+			.scrollPanel{
+				width: 100%;
+				overflow: auto;
+				overflow-x: hidden; 
+				overflow-y: hidden;
+			}
+			.full{
+				height: 6rem;
+			}
+			.scrollPanel img{
+				padding-top: 0.625rem;
+				float: right;
+				margin-right: 0.5rem;
+				padding-right: 0.2rem;
+				width: 2.2rem;
+				height: 2.5rem;
+			}
+			.search{
+				margin-top: 3rem;
+				padding-top: 0.6rem;
+				width: 100%;
+				height: 2.25rem;
+				position: fixed;
+				z-index: 9999;
+				background-color: #FFFFFF;
+			}
+			.search img{
+				margin-top: 0.135rem;
+				margin-left: 6.5%;
+				float: left;
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+			input{
+				height: 1.8rem;
+				width: 80%;
+				margin-left: 0.3rem;
+				border-radius: 0.85rem;
+			}
+			.nav-ul{  
+			    height: 100%;
+			    width: 100%; 
+			    overflow-x: hidden;
+			    overflow-y: auto;
+			   
+			} 
+			.joinBottom{
+				bottom: 0;
+				width: 100%;
+				height: 3.2rem;
+				position: fixed;
+				z-index: 9999;
+				background-color: #eeeeee;
+				text-align: center;
+			}
+			.joinBottom div{
+				margin: 0.35rem 1.4rem;
+				padding: 0.65rem 0.5rem;
+				height: 1.2rem;
+				font-size: 1rem;
+				text-align: center;
+				color: #FFFFFF;
+				background-color: #1389FE;
+				border-radius:.3125rem;
+			}
+
+			.bottomDiv{
+				width: 100%;
+				height: 3.2rem;
+			}
+			/* 弹窗内容*/
+			.large{
+				position: fixed;
+				width: 76%;
+				height: 19rem;
+				left: 12%;
+				top: 7rem;
+				z-index: 10000;
+				border: 0.1rem solid #000000;
+				background-color: #eee;
+				display: none;
+			}
+			.middle{
+				width: 100%;
+				height: 100%;
+				
+			}
+			.title{
+				width: 76%;
+				left: 12%;
+				top: 7rem;
+				height: 1.2rem;
+				font-size: 1.5rem;
+				padding: 0.4rem 0 0.7rem 0;
+				text-align: center;
+				border: 0.1rem solid #000000;
+				position: fixed;
+				z-index: 10001;
+				background-color: #eee;
+			}
+			.small{
+				width: 100%;
+				height: 18.92rem;
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+			.topFull{
+				width: 100%;
+				height: 2.3rem;
+			}
+			.sp1{
+				font-size: 0.8rem;
+				padding-top:0.3rem;
+				margin: 0.1rem 0rem -0.2rem 1rem;
+				width: 100%;
+			}
+			.sp2{
+				font-size: 0.65rem;
+				padding-bottom: 0.18rem;
+				margin: -0.2rem 0rem 0.15rem 1rem;
+				color: #333;
+				width: 100%;
+			}
+			.small li{
+				margin-left:0.2rem ;
+				margin-right: 0.2rem;
+				margin-bottom:0.1rem;
+				background-color: #ffffff;
+				line-height: 1.6rem;
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+				<div class="header" id="header">
+					<a class="back" href="../index/home.html" id="goBack"><i></i></a>
+					我加入的组织
+				</div>
+		</header>
+		<div>
+			<div class="search">
+				<img src="../../images/search.png"/>
+				<input type="search" placeholder="&#12288;请输入组织名称">
+			</div>
+		</div>
+		<div>
+		<div class="scrollPanel" id="scrollPanel">
+			<ul class="nav-ul" id="orgList">		
+			</ul>
+			
+		</div>
+		</div>
+		<div>
+			<div class="joinBottom">
+				<div id="joinBottom">
+					加入新的组织
+				</div>
+			</div>
+		</div>
+		
+		<!--组织详情-->
+		<div class="large" id="large">
+			<div class="middle">
+				<div class="title" id="title"></div>
+				<ul class="small" id="small">
+				</ul>
+			</div>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		var he =screen.height-26;
+		console.log(he);
+		var liebiao =document.getElementById('scrollPanel');
+		liebiao.style.setProperty('height', he+'px', 'important');
+	</script>
+	<script>
+		var $$ =jQuery.noConflict();
+		mui.init();
+		var attendNames=new Array();
+		// li 点击事件监听
+		mui(".nav-ul").on('tap','.orgItem',function(){		
+		  //获取id
+		var id = this.getAttribute("id");
+		console.log("id=="+id);
+		var nameId="clear"+id;
+		var attendName=document.getElementById(nameId);
+		if(id!=undefined){
+		  	// 考勤组件的点击事件
+		  	  document.getElementById("title").innerText=attendName.innerText;
+			  // 通过考勤组织ID 获取考勤
+			  var serveUrl2=getServerUrl()+"getAttendItemsByClickOrgAttend";
+			  var authorization=getAuthorization();
+			  mui.ajax(serveUrl2,{
+		  		data: {
+					'orgAttendId':id
+				},
+				dataType:'json',//服务器返回json格式数据   text 文本类型
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				headers:{
+		      			'content-type': 'application/json; charset=utf-8',
+		      			"Authorization": authorization
+		    		},  
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log("data getAttend=="+JSON.stringify(data));
+				//	console.log(data);
+					attend_data_fill(data);
+				    plus.storage.setItem("AttendData"+id,JSON.stringify(data));
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					mui.plusReady(function(){
+						var data= plus.storage.getItem("AttendData"+id);
+						attend_data_fill(JSON.parse(data));
+						console.log("请求地址错误错误");
+						console.log(type);
+					});
+					
+				//	plus.nativeUI.closeWaiting();
+					alert("请求错误");
+				}
+			});
+		}else{
+			// 考勤的点击事件
+			console.log("考勤事件的点击"+"attendId==="+id);
+			
+		}
+		//设置弹窗显示
+		$$(".large").css({
+　　　　　　display: "block", 
+　　　　　　});
+		//设置点击窗体之外隐藏弹窗
+		$$(document).mouseup(function(e){
+  			var con = $$('.large');   // 设置目标区域
+		});
+		}) 
+	
+		// 填充考勤组织信息
+		function org_data_fill(org_data){
+		var AttendOrgs=org_data.data;
+		var list="<div class=\"full\"></div>";    //组织列表
+		for(var i=0,l=AttendOrgs.length;i<l;i++){
+			var orgName=AttendOrgs[i]["orgAttendName"];
+		//	attendNames[i]=orgName;
+			var orgId=AttendOrgs[i]["orgAttendId"];
+			var orgDescription=AttendOrgs[i]["orgAttendDescription"];
+			var nameId="clear"+orgId;
+			list+=
+				"	<li class=\"orgItem\" id=\""+orgId+"\"> "
+				+"		<img src=\"../../images/right.png\"/> "
+				+"		<div> "
+				+"			<p class=\"p1\" id=\""+nameId+"\">"
+				+			orgName
+				+"			</p> "
+				+"			<p class=\"p2\"> "
+				+           orgDescription
+				+"			</p> "
+				+"		</div>  "
+				+"	</li>";
+			
+		}
+			list+="<div class=\"bottomDiv\"></div>"
+			document.getElementById("orgList").innerHTML=list;
+		}
+		
+		//填充考勤信息
+		function attend_data_fill(attend_data){
+			var attends=attend_data.data;
+			var list="<div class=\"topFull\"></div>";
+			for(var i=0,l=attends.length;i<l;i++){
+				var attendId=attends[i]["attendId"];
+				var attendName=attends[i]["attendTitle"];
+				var attendLocation=attends[i]["attendLocation"];
+				var startWorkDate=attends[i]["attendStartTime"];
+				var overWorkDate=attends[i]["attendOverTime"];
+				var timeSlot=getLocalTime(startWorkDate,overWorkDate);
+			//	alert(timeSlot);
+				list+= "    <li>"
+					+	"	<div>"
+					+	"				<p class=\"sp1\">"+attendName+"["+attendLocation+"]"+"<p>"
+					+	"				<p class=\"sp2\">"+timeSlot+"<p>"
+					+	"	</div>"
+					+	"	</li>"
+			}
+			document.getElementById("small").innerHTML=list;
+		}
+		
+		//填充考详细勤信息
+		function attend_detail_data_fill(attend_detail_data){
+			var daily_metting=attend_detail_data.data.attendTitle;
+			var start_time=attend_detail_data.data.attendStartTime;
+			var over_time=attend_detail_data.data.attendOverTime;
+			var location2=attend_detail_data.data.attendLocation;
+			
+			document.getElementById("daily_metting").innerHTML=daily_metting;
+			document.getElementById("start_time").innerHTML=getTimeFromDate(start_time);
+			document.getElementById("over_time").innerHTML=getTimeFromDate(over_time);
+			document.getElementById("location").innerHTML=location2;
+		}
+		// 获取考勤组织信息
+		mui.plusReady(function(){
+		var	authorization= getAuthorization();
+		var serverUrl=getServerUrl()+"myJoinedOrgAttend";	
+		var userId=getUserId();
+			mui.ajax(serverUrl,{
+				dataType:'json',//服务器返回json格式数据   text 文本类型
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				data:{
+					'userId':userId
+				},
+				headers:{
+          			'content-type': 'application/json; charset=utf-8',
+          			"Authorization": authorization         			
+        		},  
+				success:function(data){
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log("joinOrg  data=="+JSON.stringify(data));
+				//	console.log(data);
+					org_data_fill(data);
+					plus.storage.setItem("orgAttendsData",JSON.stringify(data));
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					mui.plusReady(function(){
+						console.log("请求地址错误错误");
+						console.log(type);
+						var data= plus.storage.getItem("orgAttendsData");
+						org_data_fill(JSON.parse(data));
+					});
+					
+				//	plus.nativeUI.closeWaiting();
+					alert("请求错误");
+				}
+			});
+		});
+		
+		// 将时间戳转为普通日期格式
+		function getLocalTime(startTime,overTime) {  		
+	   		// 将时间戳转为普通日期格式				
+			   var startdate = new Date(startTime);
+			   var overdate = new Date(overTime);
+			   var start_time = startdate.toLocaleTimeString();
+			   var over_time = overdate.toLocaleTimeString();
+			   var str_date = startdate.toLocaleDateString();			 
+			   var result=str_date+" "+start_time+"----"+over_time;			 
+			  return result;
+		}
+		// 将时间戳转为普通日期格式
+		function getTimeFromDate(time) {  		
+	   		// 将时间戳转为普通日期格式				
+			   var strdate = new Date(time);
+			   var result= strdate.toLocaleString();	 
+			  return result;
+		}
+		document.getElementById("large").addEventListener("tap",function(){
+			$$(".large").css({
+　　　　　　		display: "none", 
+　　　　　　});
+		});  
+		document.getElementById("joinBottom").addEventListener("tap",function(){
+			mui.plusReady(function(){
+    		var wait= plus.nativeUI.showWaiting();
+	    	var w= plus.webview.create("../scan/scanQRCode.html");
+			var close=plus.nativeUI.closeWaiting();
+			w.show();
+    	});
+		});
+	</script>
+</html>

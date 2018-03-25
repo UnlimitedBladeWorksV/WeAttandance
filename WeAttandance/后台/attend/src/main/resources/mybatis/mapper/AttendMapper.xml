@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.attend.mapper.AttendMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.attend.domain.entity.Attend" >
+    <constructor >
+      <idArg column="PK_ATTEND_ID" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="FK_ORG_ATTEND_ID" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="ATTEND_TITLE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ATTEND_CREATE_BY_ID" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="ATTEND_CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ATTEND_LOCATION" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ATTEND_START_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ATTEND_OVER_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ATTEND_PEOPLE_NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ATTEND_TRUE_NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ATTEND_LATE_NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ATTEND_FALSE_NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ATTEND_QR_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ATTEND_QR_CODE_OVERDUE" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+      <arg column="ATTEND_QR_CODE_REFRESH_SECOND" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PK_ATTEND_ID, FK_ORG_ATTEND_ID, ATTEND_TITLE, ATTEND_CREATE_BY_ID, ATTEND_CREATE_TIME, 
+    ATTEND_LOCATION, ATTEND_START_TIME, ATTEND_OVER_TIME, ATTEND_PEOPLE_NUM, ATTEND_TRUE_NUM, 
+    ATTEND_LATE_NUM, ATTEND_FALSE_NUM, ATTEND_QR_CODE, ATTEND_QR_CODE_OVERDUE, ATTEND_QR_CODE_REFRESH_SECOND
+  </sql>
+
+  <select id="set_foreign_key_off" >
+    SET FOREIGN_KEY_CHECKS = 0
+  </select>
+  <select id="set_foreign_key_on" >
+    SET FOREIGN_KEY_CHECKS = 1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_attend
+    where PK_ATTEND_ID = #{pkAttendId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAttendsByFkOrgAttendId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from t_attend
+    where FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_attend
+    where PK_ATTEND_ID = #{pkAttendId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="pkAttendId" parameterType="com.demo.attend.domain.entity.Attend" >
+    insert into t_attend (PK_ATTEND_ID, FK_ORG_ATTEND_ID, ATTEND_TITLE, 
+      ATTEND_CREATE_BY_ID, ATTEND_CREATE_TIME, 
+      ATTEND_LOCATION, ATTEND_START_TIME, ATTEND_OVER_TIME, 
+      ATTEND_PEOPLE_NUM, ATTEND_TRUE_NUM, ATTEND_LATE_NUM, 
+      ATTEND_FALSE_NUM, ATTEND_QR_CODE, ATTEND_QR_CODE_OVERDUE, ATTEND_QR_CODE_REFRESH_SECOND
+      )
+    values (#{pkAttendId,jdbcType=BIGINT}, #{fkOrgAttendId,jdbcType=BIGINT}, #{attendTitle,jdbcType=VARCHAR}, 
+      #{attendCreateById,jdbcType=BIGINT}, #{attendCreateTime,jdbcType=TIMESTAMP}, 
+      #{attendLocation,jdbcType=VARCHAR}, #{attendStartTime,jdbcType=TIMESTAMP}, #{attendOverTime,jdbcType=TIMESTAMP}, 
+      #{attendPeopleNum,jdbcType=INTEGER}, #{attendTrueNum,jdbcType=INTEGER}, #{attendLateNum,jdbcType=INTEGER}, 
+      #{attendFalseNum,jdbcType=INTEGER}, #{attendQrCode,jdbcType=VARCHAR}, #{attendQrCodeOverDue,jdbcType=TIMESTAMP},
+      #{attendQrCodeRefreshSecond,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.attend.domain.entity.Attend" >
+    insert into t_attend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkAttendId != null" >
+        PK_ATTEND_ID,
+      </if>
+      <if test="fkOrgAttendId != null" >
+        FK_ORG_ATTEND_ID,
+      </if>
+      <if test="attendTitle != null" >
+        ATTEND_TITLE,
+      </if>
+      <if test="attendCreateById != null" >
+        ATTEND_CREATE_BY_ID,
+      </if>
+      <if test="attendCreateTime != null" >
+        ATTEND_CREATE_TIME,
+      </if>
+      <if test="attendLocation != null" >
+        ATTEND_LOCATION,
+      </if>
+      <if test="attendStartTime != null" >
+        ATTEND_START_TIME,
+      </if>
+      <if test="attendOverTime != null" >
+        ATTEND_OVER_TIME,
+      </if>
+      <if test="attendPeopleNum != null" >
+        ATTEND_PEOPLE_NUM,
+      </if>
+      <if test="attendTrueNum != null" >
+        ATTEND_TRUE_NUM,
+      </if>
+      <if test="attendLateNum != null" >
+        ATTEND_LATE_NUM,
+      </if>
+      <if test="attendFalseNum != null" >
+        ATTEND_FALSE_NUM,
+      </if>
+      <if test="attendQrCode != null" >
+      ATTEND_QR_CODE,
+    </if>
+      <if test="attendQrCode != null" >
+        ATTEND_QR_CODE_OVERDUE,
+      </if>
+      <if test="attendQrCodeRefreshSecond != null" >
+        ATTEND_QR_CODE_REFRESH_SECOND,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkAttendId != null" >
+        #{pkAttendId,jdbcType=BIGINT},
+      </if>
+      <if test="fkOrgAttendId != null" >
+        #{fkOrgAttendId,jdbcType=BIGINT},
+      </if>
+      <if test="attendTitle != null" >
+        #{attendTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="attendCreateById != null" >
+        #{attendCreateById,jdbcType=BIGINT},
+      </if>
+      <if test="attendCreateTime != null" >
+        #{attendCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendLocation != null" >
+        #{attendLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="attendStartTime != null" >
+        #{attendStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendOverTime != null" >
+        #{attendOverTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendPeopleNum != null" >
+        #{attendPeopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendTrueNum != null" >
+        #{attendTrueNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendLateNum != null" >
+        #{attendLateNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendFalseNum != null" >
+        #{attendFalseNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendQrCode != null" >
+        #{attendQrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="attendQrCode != null" >
+        #{attendQrCodeOverDue,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendQrCodeRefreshSecond != null" >
+        #{attendQrCodeRefreshSecond,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.attend.domain.entity.Attend" >
+    update t_attend
+    <set >
+      <if test="fkOrgAttendId != null" >
+        FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT},
+      </if>
+      <if test="attendTitle != null" >
+        ATTEND_TITLE = #{attendTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="attendCreateById != null" >
+        ATTEND_CREATE_BY_ID = #{attendCreateById,jdbcType=BIGINT},
+      </if>
+      <if test="attendCreateTime != null" >
+        ATTEND_CREATE_TIME = #{attendCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendLocation != null" >
+        ATTEND_LOCATION = #{attendLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="attendStartTime != null" >
+        ATTEND_START_TIME = #{attendStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendOverTime != null" >
+        ATTEND_OVER_TIME = #{attendOverTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendPeopleNum != null" >
+        ATTEND_PEOPLE_NUM = #{attendPeopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendTrueNum != null" >
+        ATTEND_TRUE_NUM = #{attendTrueNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendLateNum != null" >
+        ATTEND_LATE_NUM = #{attendLateNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendFalseNum != null" >
+        ATTEND_FALSE_NUM = #{attendFalseNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendQrCode != null" >
+        ATTEND_QR_CODE = #{attendQrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="attendQrCode != null" >
+        ATTEND_QR_CODE_OVERDUE = #{attendQrCodeOverDue,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendQrCodeRefreshSecond != null" >
+        ATTEND_QR_CODE_REFRESH_SECOND = #{attendQrCodeRefreshSecond,jdbcType=INTEGER},
+      </if>
+    </set>
+    where PK_ATTEND_ID = #{pkAttendId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.attend.domain.entity.Attend" >
+    update t_attend
+    set FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT},
+      ATTEND_TITLE = #{attendTitle,jdbcType=VARCHAR},
+      ATTEND_CREATE_BY_ID = #{attendCreateById,jdbcType=BIGINT},
+      ATTEND_CREATE_TIME = #{attendCreateTime,jdbcType=TIMESTAMP},
+      ATTEND_LOCATION = #{attendLocation,jdbcType=VARCHAR},
+      ATTEND_START_TIME = #{attendStartTime,jdbcType=TIMESTAMP},
+      ATTEND_OVER_TIME = #{attendOverTime,jdbcType=TIMESTAMP},
+      ATTEND_PEOPLE_NUM = #{attendPeopleNum,jdbcType=INTEGER},
+      ATTEND_TRUE_NUM = #{attendTrueNum,jdbcType=INTEGER},
+      ATTEND_LATE_NUM = #{attendLateNum,jdbcType=INTEGER},
+      ATTEND_FALSE_NUM = #{attendFalseNum,jdbcType=INTEGER},
+      ATTEND_QR_CODE = #{attendQrCode,jdbcType=VARCHAR},
+      ATTEND_QR_CODE_OVERDUE = #{attendQrCodeOverDue,jdbcType=TIMESTAMP},
+      ATTEND_QR_CODE_REFRESH_SECOND = #{attendQrCodeRefreshSecond,jdbcType=INTEGER}
+    where PK_ATTEND_ID = #{pkAttendId,jdbcType=BIGINT}
+  </update>
+</mapper>

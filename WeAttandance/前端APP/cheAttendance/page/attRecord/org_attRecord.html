@@ -1,0 +1,491 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<style>
+			blockquote,body,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,html,iframe,input,legend,li,ol,p,pre,td,textarea,th,ul {
+				padding: 0;
+				margin: 0
+			}
+			
+			html {
+				-webkit-overflow-scrolling: touch;
+				-webkit-text-size-adjust: 100%;
+				overflow-y: hidden;
+			}
+			
+			body {
+				-webkit-overflow-scrolling: touch;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				overflow-y: hidden;
+			}
+			
+			a,body,input,input:focus,select,select:focus,textarea,textarea:focus {
+				-webkit-tap-highlight-color: transparent;
+				outline: 0;
+			}
+			
+			li {
+				list-style-type: none
+			}
+			
+			table {
+				border-collapse: collapse;
+				border-spacing: 0
+			}
+			
+			fieldset {
+				border: none
+			}
+			
+			legend {
+				display: none
+			}
+			
+			a:active,a:hover,button {
+				outline: 0
+			}
+			
+			input[type=checkbox],input[type=radio] {
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			
+			em,i {
+				font-style: normal;
+			}
+			
+			a {
+				text-decoration: none;
+				-webkit-tap-highlight-color: transparent
+			}
+			
+			body {
+				font-family: '微软雅黑';
+				background: #F3F3F3
+			}
+			.header {
+				position: fixed;
+				width: 100%;
+				height: 3rem;
+				line-height: 3rem;
+				background: #1389FE;
+				text-align: center;
+				z-index: 9999;
+			}
+			
+			.back {
+				padding-left: 1.125rem;
+				position: absolute;
+				top: 0;
+				left: 0
+			}
+			.back i {
+				width: .75rem;
+				height: 1.25rem;
+				margin-top: .875rem;
+				background: url(../../images/log_reg_back.png) no-repeat;
+				background-size: 100%;
+				display: block
+			}
+			#title{
+				font-size: 1rem;
+				color: #fff;
+			}
+			
+			
+			
+			
+			.record{
+				position: absolute;
+				top: 3rem;
+				width: 100%;
+				height: 13rem;
+				overflow-x:hidden ;
+				overflow-y: auto;
+				background-color: #FFFFFF;
+			}
+			.detailed{
+    		text-align: center;
+    		background: #eee;
+    		position: absolute;
+    		top:16rem;
+    		margin: 0;
+    		padding: 0;
+    		width: 100%;
+    		height: 1.85rem;
+    		line-height: 1.85rem;
+    		font-size: 1rem;
+    	}
+			.dateBtn{
+				width: 100%;
+				height: 1.5rem;
+				margin: 0 auto;
+				text-align: center;
+				margin-top: 1.5rem;
+			}
+			.sign{
+				margin: 0 auto;
+				width: 100%;
+				height: 1.5rem;
+				text-align: center;
+				margin-top: 1.5rem;
+				font-size: 1.2rem;
+				font-family: "微软雅黑";
+			}
+			.type{
+				margin-top: 1.5rem;
+			}
+			.row button{
+				width:49.9%;
+				height: 2rem;
+				float: left;
+			}
+			.signEvent{
+				width: 100%;
+				overflow: auto;
+				overflow-x: hidden; 
+				overflow-y: hidden;
+			}
+			.itemList{  
+			    height: 100%;
+			    width: 100%; 
+			    overflow-x: hidden;
+			    overflow-y: auto;
+			   
+			} 
+			li{
+			margin-left:0.3rem ;
+			margin-right: 0.3rem;
+			margin-bottom:0rem;
+			background-color: #ffffff;
+			line-height: 1.6rem;
+				
+		}
+		.p1{
+			font-size: 1rem;
+			padding-top:0.25rem;
+			margin: 0.1rem 0rem 0.1rem 1rem;
+			width: 100%;
+			color: #000000;
+		}
+		.p2{
+			font-size: 0.8rem;
+			padding-bottom: 0.18rem;
+			margin: 0.15rem 0rem 0.15rem 1rem;
+			color: #666;
+			width: 100%;
+		}
+		.full{
+			width: 100%;
+			height:18rem;
+		}
+		</style>
+	</head>
+
+	<body>
+		<header>
+				<div class="header" id="header">
+					<a class="back mui-action-back" href="#" id="goBack"><i></i></a>
+					<p id="title">组织考勤记录</p>
+				</div>
+		</header>
+		
+			<div class="record">
+				<div class="dateBtn">
+			    	<button id='result' data-options='{"type":"date"}' class="btn mui-btn mui-btn-link">
+			    		0000-00-00
+			    	</button>    	
+				</div>
+				<div class="sign">
+					<h3 id="orgName"></h3>
+				</div>
+				<div class="type">
+					<div class="row">
+						<button type="button" class="mui-btn mui-btn-link" id="shouldNum">
+							应到：0人
+			            	<span class="mui-icon mui-icon-forward"></span>
+			        	</button>
+			        	<button type="button" class="mui-btn mui-btn-link" id="trueNum">实到：0人
+			            	<span class="mui-icon mui-icon-forward"></span>
+			        	</button>
+		        	</div>
+		        	<div class="row">
+			        	<button type="button" class="mui-btn mui-btn-link" id="lateNum">迟到：0人
+			            	<span class="mui-icon mui-icon-forward"></span>
+			        	</button>
+			        	<button type="button" class="mui-btn mui-btn-link" id="falseNum">缺勤：0人
+			            	<span class="mui-icon mui-icon-forward"></span>
+			        	</button>
+		        	</div>
+				</div>
+				
+			</div>
+			<div class="detailed">
+				考勤明细
+			</div>
+			<div class="signEvent" id="signEvent"> 
+			<ul class="itemList" id="attendRecords">
+			</ul>
+		</div>
+	
+	<script type="text/javascript">
+		var he =screen.height-26;
+		var liebiao =document.getElementById('signEvent');
+		liebiao.style.setProperty('height', he+'px', 'important');
+	</script>
+	<script type="text/javascript">
+	mui.plusReady(function(){
+		var userId=getUserId();
+		var myDate=toDate(new Date());
+		document.getElementById("result").innerText=myDate;
+		console.log(myDate);
+		var dataJson={"date":new Date(),"userId":userId};
+		console.log(JSON.stringify(dataJson));
+		ajaxGetAuthorization("getMyCreatedOrgAttendRecordByDate",dataJson,sucessful,fail);	
+	});
+	
+	mui.init();
+	(function($) {
+		$.init();
+		var result = $('#result')[0];
+		var btns = $('.btn');
+		btns.each(function(i, btn) {
+			btn.addEventListener('tap', function() {
+				var optionsJson = this.getAttribute('data-options') || '{}';
+				var options = JSON.parse(optionsJson);
+				var id = this.getAttribute('id');
+				var picker = new $.DtPicker(options);
+				picker.show(function(rs) {
+				var time = rs.text
+				result.innerText =  rs.text;
+				var timeDate= new Date(Date.parse(time));
+				plus.storage.removeItem("attendRecords");
+				plus.storage.removeItem("currentAttendId");
+				var userId=getUserId();
+				var dataJson={"date":timeDate,"userId":userId};
+				console.log(JSON.stringify(dataJson));
+				ajaxGetAuthorization("getMyCreatedOrgAttendRecordByDate",dataJson,sucessful,fail);
+				picker.dispose();
+				});
+			}, false);
+		});
+	})(mui);
+	function sucessful(data){
+		console.log("getMyCreatedOrgAttendRecordByDate"+JSON.stringify(data));
+		var attendRecords = data.data;  
+		plus.storage.setItem("attendRecords",JSON.stringify(attendRecords));
+		var list="<div class=\"full\"></div>";
+		var l=attendRecords.length;
+		for(var i=0;i<l;i++){
+			
+			var attendTitle=attendRecords[i]["attendTitle"];
+			var orgAttendName=attendRecords[i]["orgAttendName"];
+			var attendStartTime=attendRecords[i]["attendStartTime"];
+			var attendOverTime=attendRecords[i]["attendOverTime"];
+			var time_quantum=getLocalTime(attendStartTime,attendOverTime);
+			list+="	<li class=\"item\" id=\""+i+"\"> "		
+				+"	<div> 		"
+				+" 	<p class=\"p1\">"+attendTitle+" ["+orgAttendName+"]</p>"
+				+" 	<p class=\"p2\">"+time_quantum+"</p>"
+				+"	</div>								" 
+				+"</li>";				
+		}
+		document.getElementById("attendRecords").innerHTML=list;
+		if(l>0){
+			// 给第一条记录加上 span
+			addSpanIcon("0"); 
+			initStateNum("0");
+		}else{
+			initStateto0();
+		}
+	}
+	function fail(data){
+		alert(data);
+	}
+	// 将时间戳转为普通日期格式
+	function getLocalTime(startTime,overTime) {  		
+   		// 将时间戳转为普通日期格式				
+		   var startdate = new Date();
+		   var overdate = new Date();
+		   startdate.setTime(startTime);
+		   overdate.setTime(overTime);
+		   var str_start = startdate.toLocaleTimeString();
+		   var str_over = overdate.toLocaleTimeString();
+		   var result=" "+str_start+"-"+str_over;			 
+		  return result;
+	}
+	</script>
+	<script>
+		mui.init();
+		//ul点击事件
+		var lastId=0;
+		var lastRecord;
+		mui(".itemList").on('tap','.item',function(){		
+			document.getElementById(lastId).innerHTML=lastRecord;
+			  //获取id
+			var id = this.getAttribute("id");
+			var record= document.getElementById(id).innerHTML;
+			addSpanIcon(id);
+			lastId=id;
+			console.log("id=="+id);
+			initStateNum(id);
+		}); 
+		// 初始化各种状态的人数状态的人数
+		function initStateNum(id){
+			mui.plusReady(function(){
+				var attendRecords=plus.storage.getItem("attendRecords");
+				var recordsJson=JSON.parse(attendRecords);
+				var shouldNum=recordsJson[id].shouldNum;
+				var trueNum=recordsJson[id].trueNum;
+				var lateNum=recordsJson[id].lateNum;
+				var falseNum=recordsJson[id].falseNum;
+				var currentAttendId=recordsJson[id].attendId;
+				var orgName=recordsJson[id].orgAttendName;
+				console.log("orgName=="+orgName);
+				document.getElementById("orgName").innerText=orgName;
+				plus.storage.setItem("currentAttendId",currentAttendId+"");
+				document.getElementById("shouldNum").innerHTML=
+				"应到："+shouldNum+"人"
+			    +"<span class=\"mui-icon mui-icon-forward\"></span>";
+			    document.getElementById("trueNum").innerHTML=
+				"实到："+trueNum+"人"
+			    +"<span class=\"mui-icon mui-icon-forward\"></span>";
+			    document.getElementById("lateNum").innerHTML=
+				"迟到："+lateNum+"人"
+			    +"<span class=\"mui-icon mui-icon-forward\"></span>";
+			    document.getElementById("falseNum").innerHTML=
+				"缺勤："+falseNum+"人"
+			    +"<span class=\"mui-icon mui-icon-forward\"></span>";
+			});
+		}
+		// 给各种状态初始化为0
+		function initStateto0(){
+			document.getElementById("shouldNum").innerHTML=
+				"应到："+0+"人"
+			    +"<span class=\"mui-icon mui-icon-forward\"></span>";
+			    document.getElementById("trueNum").innerHTML=
+				"实到："+0+"人"
+			    +"<span class=\"mui-icon mui-icon-forward\"></span>";
+			    document.getElementById("lateNum").innerHTML=
+				"迟到："+0+"人"
+			    +"<span class=\"mui-icon mui-icon-forward\"></span>";
+			    document.getElementById("falseNum").innerHTML=
+				"缺勤："+0+"人"
+			    +"<span class=\"mui-icon mui-icon-forward\"></span>";
+		}
+		// 给item 加上span图标
+		function addSpanIcon(id){
+			var record= document.getElementById(id).innerHTML;
+			document.getElementById(id).innerHTML="<span class=\"mui-icon mui-icon-home mui-pull-right\" style=\"line-height: 50px;\"></span>"
+													+record;
+			lastRecord=record;										
+		}
+		//应到按钮
+		document.getElementById("shouldNum").addEventListener("tap",function(){
+			mui.plusReady(function(){
+				var currentAttendId= plus.storage.getItem("currentAttendId");
+				var attendId=parseInt(currentAttendId);
+				if(currentAttendId==undefined){
+				}else{
+					mui.openWindow({
+						url:'../people/peopleNumber.html',
+						extras:{
+							"attendId":attendId,
+							"state":"Should"
+						}
+					});
+				}				
+			});
+		});
+		//实到按钮
+		document.getElementById("trueNum").addEventListener("tap",function(){
+			mui.plusReady(function(){
+				status="True";
+				var currentAttendId= plus.storage.getItem("currentAttendId");
+				var attendId=parseInt(currentAttendId);
+				if(currentAttendId==undefined){		
+					
+				}else{
+					mui.openWindow({
+						url:'../people/peopleNumber.html',
+						extras:{
+							"attendId":attendId,
+							"state":"True"
+						}
+					});
+				}
+			});
+		});
+		//迟到按钮
+		document.getElementById("lateNum").addEventListener("tap",function(){
+			mui.plusReady(function(){
+				status="Late";
+				var currentAttendId= plus.storage.getItem("currentAttendId");
+				var attendId=parseInt(currentAttendId);
+				if(currentAttendId==undefined){			
+				}else{
+					mui.openWindow({
+						url:'../people/peopleNumber.html',
+						extras:{
+							"attendId":attendId,
+							"state":"Late"
+						}
+					});
+				}	
+			});
+		});
+		//应到按钮
+		document.getElementById("falseNum").addEventListener("tap",function(){
+			mui.plusReady(function(){
+				status="False";
+				var currentAttendId= plus.storage.getItem("currentAttendId");
+				var attendId=parseInt(currentAttendId);
+				if(currentAttendId==undefined){
+					
+				}else{
+					mui.openWindow({
+						url:'../people/peopleNumber.html',
+						extras:{
+							"attendId":attendId,
+							"state":"False"
+						}
+					});
+				}
+			});
+		});
+	function toDate(date){	
+		this.year = date.getFullYear();
+		this.month = date.getMonth() + 1;
+		this.date5 = date.getDate();
+		var result=year+"-"+month+"-"+date5;
+		return result;
+	}
+	</script>
+	</body>
+
+</html>
+<!--
+	<li class="mui-table-view-cell">
+		<div>
+			<h5>考勤事件A（9：00-9：10）</h5>
+			<p>考勤组织一</p>
+		</div>				
+	</li>
+	<li class="mui-table-view-cell" >
+					<span class="mui-icon mui-icon-home mui-pull-right" style="line-height: 50px;"></span>
+					<div>
+						<h5>考勤事件A（9：00-9：10）</h5>
+						<p>考勤组织一</p>
+					</div>					
+				</li>	
+->

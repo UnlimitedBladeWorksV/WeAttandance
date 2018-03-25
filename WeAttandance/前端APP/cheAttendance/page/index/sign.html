@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css"/>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/config.js"></script>
+			<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<style>
+			blockquote,body,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,html,iframe,input,legend,li,ol,p,pre,td,textarea,th,ul {
+				padding: 0;
+				margin: 0
+			}
+			
+			html {
+				-webkit-overflow-scrolling: touch;
+				-webkit-text-size-adjust: 100%;
+				overflow-y: hidden;
+			}
+			
+			body {
+				-webkit-overflow-scrolling: touch;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				overflow-y: hidden;
+			}
+			
+			a,body,input,input:focus,select,select:focus,textarea,textarea:focus {
+				-webkit-tap-highlight-color: transparent;
+				outline: 0;
+			}
+			
+			li {
+				list-style-type: none
+			}
+			
+			table {
+				border-collapse: collapse;
+				border-spacing: 0
+			}
+			
+			fieldset {
+				border: none
+			}
+			
+			legend {
+				display: none
+			}
+			
+			a:active,a:hover,button {
+				outline: 0
+			}
+			
+			input[type=checkbox],input[type=radio] {
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			
+			em,i {
+				font-style: normal;
+			}
+			
+			a {
+				text-decoration: none;
+				-webkit-tap-highlight-color: transparent
+			}
+			
+			body {
+				font-family: '微软雅黑';
+				background: #F3F3F3
+			}
+			
+			.header {
+				position: fixed;
+				width: 100%;
+				height: 3rem;
+				line-height: 3rem;
+				background: #1389FE;
+				font-size: 1rem;
+				color: #fff;
+				text-align: center;
+				z-index: 9999;
+			}
+			
+			.back {
+				padding-left: 1.125rem;
+				position: absolute;
+				top: 0;
+				left: 0
+			}
+			
+			.back i {
+				width: .75rem;
+				height: 1.25rem;
+				margin-top: .875rem;
+				background: url(../../images/log_reg_back.png) no-repeat;
+				background-size: 100%;
+				display: block
+			}
+			
+			li{
+				margin-left:0.3rem ;
+				margin-right: 0.3rem;
+				margin-bottom:0rem;
+				background-color: #ffffff;
+				line-height: 1.6rem;
+			}
+			.p1{
+				font-size: 1rem;
+				padding-top:0.25rem;
+				margin: 0.1rem 1rem 0.1rem;
+			}
+			.p2{
+				font-size: 0.75rem;
+				padding-bottom: 0.18rem;
+				margin: 0.15rem 1rem 0.15rem;
+				color: #777;
+			}
+			.scrollPanel{
+				width: 100%;
+				overflow: auto;
+				overflow-x: hidden; 
+				overflow-y: hidden;
+			}
+			.full{
+				height: 3rem;
+			}
+			.scrollPanel img{
+				padding-top: 0.625rem;
+				float: right;
+				margin-right: 0.5rem;
+				padding-right: 0.2rem;
+				width: 2.2rem;
+				height: 2.5rem;
+			}
+			.search{
+				margin-top: 3rem;
+				padding-top: 0.6rem;
+				width: 100%;
+				height: 2.25rem;
+				position: fixed;
+				z-index: 9999;
+				background-color: #FFFFFF;
+			}
+			.search img{
+				margin-top: 0.135rem;
+				margin-left: 6.5%;
+				float: left;
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+			input{
+				height: 1.8rem;
+				width: 80%;
+				margin-left: 0.3rem;
+				border-radius: 0.85rem;
+			}
+			.nav-ul{  
+			    height: 100%;
+			    width: 100%; 
+			    overflow-x: hidden;
+			    overflow-y: auto;
+			   
+			} 
+			.joinBottom{
+				bottom: 0;
+				width: 100%;
+				height: 3.2rem;
+				position: fixed;
+				z-index: 9999;
+				background-color: #eeeeee;
+				text-align: center;
+			}
+			.joinBottom div{
+				margin: 0.35rem 1.4rem;
+				padding: 0.65rem 0.5rem;
+				height: 2.5rem;
+				font-size: 1rem;
+				text-align: center;
+				color: #FFFFFF;
+				background-color: #1389FE;
+				border-radius:.3125rem;
+			}
+			.bottomDiv{
+				width: 100%;
+				height: 3.2rem;
+			}
+
+		</style>
+	</head>
+	<body>
+		<header>
+				<div class="header" id="header">
+					<a class="back mui-action-back" id="goBack"><i></i></a>
+					签到
+				</div>
+		</header>
+
+		<div>
+		<div class="scrollPanel" id="scrollPanel">
+			<ul class="nav-ul" id="orgList">	
+				
+			</ul>
+			
+		</div>
+		</div>
+		<div>
+			<div class="joinBottom">
+				<div id="joinBottom">
+					扫一扫签到
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	<script>
+		mui.init();
+		document.getElementById("joinBottom").addEventListener("tap",function(){
+			mui.plusReady(function(){
+    		var wait= plus.nativeUI.showWaiting();
+	    	var w= plus.webview.create("../scan/scanQRCode.html");
+			var close=plus.nativeUI.closeWaiting();
+			w.show();
+			});
+		});
+		mui.plusReady(function(){
+			var myDate=new Date();
+			var userId=getUserId();
+			var jsonData={"date":myDate,userId:userId};
+			console.log(JSON.stringify(jsonData));
+			ajaxGetAuthorization("getUserAttendRecordByDate",jsonData,sucessful,fail);
+		});
+		
+		function sucessful(data){
+			console.log(JSON.stringify(data));
+			var attendRecord=data.data;
+			var list="<div class=\"full\"></div>";
+			for(var i=0,l=attendRecord.length;i<l;i++){
+				var attendId=attendRecord[i]["attendId"];
+				var attendName=attendRecord[i]["attendTitle"];
+				var attendLocation=attendRecord[i]["attendLocation"];
+				var attendStartTime=attendRecord[i]["attendStartTime"];
+				var attendOverTime=attendRecord[i]["attendOverTime"];
+				var orgName=attendRecord[i]["orgAttendName"];
+				var attendState=attendRecord[i]["attendState"];
+				var stateJson={"True":"实到","Late":"迟到","False":"缺勤","Should":"应到"};
+				var state=stateJson[attendState];
+				var myDate=new Date();
+				var startdate = new Date();
+			   	var overdate = new Date();
+			   	startdate.setTime(attendStartTime);
+			   	overdate.setTime(attendOverTime);
+			   	var item="";
+			   	if(overdate<myDate){
+			   		//考勤已结束
+			   		item=	"<li class=\"mui-table-view-cell\">"+attendName+"["+orgName+"]"
+			        		+	"<span class=\"mui-badge\">已经结束</span>"
+			   			 	+"</li>"
+			   	}else if(startdate<myDate && myDate<overdate){
+			   		//考勤进行中
+			   		item=	"<li class=\"mui-table-view-cell\">"+attendName+"["+orgName+"]"
+			        		+	"<span class=\"mui-badge mui-badge-red \"> 现在到"+overdate.toLocaleTimeString()+"</span>"
+			   			 	+"</li>"
+			   	}else{
+			   		// 考勤还未开始
+			   		//考勤进行中
+			   		item=	"<li class=\"mui-table-view-cell\">"+attendName+"["+orgName+"]"
+			        		+	"<span class=\"mui-badge mui-badge-success \">"+startdate.toLocaleTimeString()+" -"+overdate.toLocaleTimeString()+"</span>"
+			   			 	+"</li>"
+			   	}
+				list+=item;
+				
+				
+			}
+			document.getElementById("orgList").innerHTML=list;
+		}
+		function fail(data){
+			console.log(data);
+		}
+		
+	</script>
+</html>
+<!--
+	<li class="mui-table-view-cell">吃饭 [组织一]
+			        <span class="mui-badge">已经结束</span>
+			    </li>
+			    <li class="mui-table-view-cell">开会 [组织一]
+			        <span class="mui-badge mui-badge-red">进行中</span>
+			    </li>
+			    <li class="mui-table-view-cell">开会 [组织一]
+			        <span class="mui-badge mui-badge-success">2017年12月8日21:22:40开始</span>
+			    </li>
+->

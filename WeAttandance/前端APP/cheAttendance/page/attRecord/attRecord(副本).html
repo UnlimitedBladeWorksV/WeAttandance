@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+
+	<head>
+		 <meta charset="utf-8">
+	<link rel="stylesheet" href="../../css/mui.min.css" ></link>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/calendar.css" rel="stylesheet" />		
+	<style>
+    	.detailed{
+    		text-align: center;
+    		background: #1389FE;
+    		margin: 0;
+    		padding: 0;
+    		position: absolute;
+    		width: 100%;
+    		top: 370px;
+    		height: 30px;
+    		line-height: 30px;
+    		font-size: 15px;
+    		color: #FFFFFF;
+    	}
+    	.mui-content{
+    		background: #242424;
+    		padding: 0px;
+    		margin: 0;
+    	}
+    	.signEvent{
+    		position: absolute;
+    		width: 100%;
+    		height: 30px;
+    		top: 400px;
+    	}
+    	.topcolor2{
+			height: 3rem;
+			line-height: 3rem;
+			background: #1389FE;
+			font-size: 1rem;
+			color: #fff;
+			text-align: center
+		}
+		.back {
+			padding-left: 1.125rem;
+			position: absolute;
+			top: 0;
+			left: 0
+		}
+		.back i {
+			width: .75rem;
+			height: 1.25rem;
+			margin-top: .875rem;
+			background: url(../../images/log_reg_back.png) no-repeat;
+			background-size: 100%;
+			display: block
+		}
+    </style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav topcolor2">
+			<a class="back mui-action-back" id="goBack"><i></i></a>
+			<h1 class="mui-title toptextcolor">考勤记录</h1>
+		</header>
+		<div class="mui-content">
+		<script src="../../js/calendar.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+		</script>
+		<div class="detailed">
+			考勤明细
+		</div>
+		<div class="signEvent">
+			<ul class="mui-table-view" id="ul_attendRecord">
+				<li class="mui-table-view-cell">
+					<div class="mui-pull-right">
+						<h5>未签到</h5>
+					</div>
+					<div>
+						<h5>考勤事件A（9：00-9：10）</h5>
+						<p>考勤组织一</p>
+					</div>					
+				</li>
+			</ul>
+		</div>
+	</div>
+		    
+	<script src="../../js/mui.min.js"></script> 
+	<script src="../../js/config.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		var stateJson={"True":"实到","Late":"迟到","False":"缺勤","Should":"应到"};
+		var cld = new Calendar({
+			el: 'body',
+			value: '', // 默认为new Date();
+			callback: function(obj) {
+				console.log(JSON.stringify(obj));
+				var time=obj["month"]+"/"+obj["day"]+"/"+obj["year"];
+				console.log("时间为："+time);
+				var userId=getUserId();
+				var jsonData={"date":time,userId:userId};
+				console.log(JSON.stringify(jsonData));
+				ajaxGetAuthorization("getUserAttendRecordByDate",jsonData,sucessful,fail);
+			}  
+		});
+		
+		function sucessful(data){
+			console.log(JSON.stringify(data));
+			var attendRecord=data.data;
+			var list="";
+			for(var i=0,l=attendRecord.length;i<l;i++){
+				var attendId=attendRecord[i]["attendId"];
+				var attendName=attendRecord[i]["attendTitle"];
+				var attendLocation=attendRecord[i]["attendLocation"];
+				var attendStartTime=attendRecord[i]["attendStartTime"];
+				var attendOverTime=attendRecord[i]["attendOverTime"];
+				var orgName=attendRecord[i]["orgAttendName"];
+				var attendState=attendRecord[i]["attendState"];
+				var timeSlot=getLocalTime(attendStartTime,attendOverTime);
+				var state=stateJson[attendState];
+				list+="<li class=\"mui-table-view-cell\"> 	"
+				+"	<div class=\"mui-pull-right\"> 		"
+				+"		<h5> "
+				+ state
+				+"	</h5> 					"
+				+"	</div> 								"
+				+"	<div> 								"
+				+"		<h5>"+attendName+"（"+timeSlot+"）</h5> "
+				+"		<p>"+orgName+"</p> 				"
+				+"	</div>								" 
+				+"</li>";
+			}
+			document.getElementById("ul_attendRecord").innerHTML=list;
+		}
+		function fail(data){
+			console.log(data);
+		}
+		
+			// 将时间戳转为普通日期格式
+		function getLocalTime(startTime,overTime) {  		
+	   		// 将时间戳转为普通日期格式				
+			   var startdate = new Date();
+			   var overdate = new Date();
+			   startdate.setTime(startTime);
+			   overdate.setTime(overTime);
+			   var str_start = startdate.toLocaleTimeString();
+			   var str_over = overdate.toLocaleTimeString();
+			   var result=" "+str_start+"-"+str_over;			 
+			  return result;
+		}
+	</script>
+	</body>  
+</html>

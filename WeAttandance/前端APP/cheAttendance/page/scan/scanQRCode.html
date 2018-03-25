@@ -1,0 +1,256 @@
+<!doctype html>  
+<html>  
+   <head>  
+    <meta charset="UTF-8">  
+    <title></title>  
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /> 
+    <script src="../../js/config.js"></script>
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <style type="text/css">  
+    	blockquote,body,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,html,iframe,input,legend,li,ol,p,pre,td,textarea,th,ul {
+				padding: 0;
+			margin: 0
+		}
+		
+		html {
+			-webkit-overflow-scrolling: touch;
+			-webkit-text-size-adjust: 100%;
+			overflow-y: hidden;
+		}
+		
+		body {
+			-webkit-overflow-scrolling: touch;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+			overflow-y: hidden;
+		}
+		
+		a,body,input,input:focus,select,select:focus,textarea,textarea:focus {
+			-webkit-tap-highlight-color: transparent;
+			outline: 0;
+		}
+		
+		li {
+			list-style-type: none
+		}
+		
+		table {
+			border-collapse: collapse;
+			border-spacing: 0
+		}
+		
+		fieldset {
+			border: none
+		}
+		
+		legend {
+			display: none
+		}
+		
+		a:active,a:hover,button {
+			outline: 0
+		}
+		
+		input[type=checkbox],input[type=radio] {
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		
+		em,i {
+			font-style: normal;
+		}
+		
+		a {
+			text-decoration: none;
+			-webkit-tap-highlight-color: transparent
+		}
+		
+		body {
+			font-family: '微软雅黑';
+			background: #F3F3F3;
+		}
+    	#bcid{  
+    	
+        position: fixed;  
+        background:#000000;  
+    	}  
+    	.bottom{
+    		position: fixed;
+    		z-index: 9999;
+    		top: 79%;
+    		text-align: center;
+    		width: 100%;
+    		height: 21%;
+    		font-size: 1.5rem;
+    	}
+    	.bottom div{
+    		position: absolute;
+    		height: 33%;
+    		width: 100%;
+    		background-color: #999;
+    		padding-top: 0.5rem;
+    	}
+    	#bcid{
+    		width:100%;
+    		height: 100%;
+    		background: #000000;
+    	}
+    	.div1{
+    		top: 0%;
+    	}
+    	.div2{
+    		top: 33.33%;
+    	}
+    	.div3{
+    		top: 66.67%;
+    	}
+    </style>  
+   </head>  
+  <body>  
+    <header>	
+	</header>
+	<div class="mui-content">
+	    <div id="bcid">     
+	         <!--盛放扫描控件的div-->          
+	    </div>            
+	    
+   </div>
+    <script type="text/javascript">  
+        var scan = null;//扫描对象  
+        var qrcode="";
+        mui.plusReady(function () {  
+            mui.init();        
+            startRecognize();
+        });              
+        function startRecognize(){  
+           	try{  
+            	var filter;  
+             	//自定义的扫描控件样式  
+            	var styles = {frameColor:"#66ccff",scanbarColor: "#66ccff",background:""}  
+	            //扫描控件构造  
+	            scan = new plus.barcode.Barcode('bcid',filter,styles);  
+	            scan.onmarked = onmarked;   
+	            scan.onerror = onerror;  
+	            scan.start();  
+	           
+          	}catch(e){  
+            	alert("出现错误啦:\n"+e);  
+            }  
+       	};  
+        function onerror(e){  
+            alert(e);  
+        };  
+        function onmarked( type, result ) {  
+            var text = '';  
+            switch(type){  
+                case plus.barcode.QR:  
+                text = 'QR: ';  
+                break;  
+                case plus.barcode.EAN13:  
+                text = 'EAN13: ';  
+                break;  
+                case plus.barcode.EAN8:  
+                text = 'EAN8: ';  
+                break;  
+            }
+            qrcode=result;
+        //	alert( text + " : "+ result );
+        	var userId=getUserId();
+        	var dataJson={"qrCode":result,"userId":userId};
+            ajaxGetAuthorization("qrCodeCheck",dataJson,sucessCheck,failCheck);    
+        };
+        function sucessCheck(data){
+        	console.log(JSON.stringify(data));
+        //	alert(JSON.stringify(data));
+ 			var code=data.code;
+ 			var msg=data.msg;
+ 			if(code==200){
+ 				//调转考勤
+ 			//    alert("调转考勤");
+ 			    var userId=getUserId();
+				console.log("qrcode=="+qrcode);
+				var dataJson={"qrCode":qrcode,"userId":userId};
+				console.log(JSON.stringify(dataJson));
+				ajaxPostAuthorization("attendCheck",dataJson,sucessfulAttendCheck,failAttendCheck);			
+ 			}else if(code==201){
+ 				//调转考勤组织
+ 			//	alert("调转考勤组织");
+				var userId=getUserId();
+				console.log("qrcode=="+qrcode);
+				var dataJson={"qrCode":qrcode,"userId":userId};
+				console.log(JSON.stringify(dataJson));
+				ajaxPostAuthorization("joinOrgAttendByQrCode",dataJson,sucessfulJoinOrg,failJoinOrg);			
+ 			}else {
+ 				//二维码失效
+ 				console.log("二维码失效");
+ 			}
+ 		}
+ 		function failCheck(data){
+ 			alert("错误");
+ 		}
+       
+        function sucessfulJoinOrg(data){
+        	console.log(JSON.stringify(data));
+ 			var code=data.code;
+ 			var msg=data.msg;
+ 			if(code==200){
+ 				//加入成功
+ 				scan.close();
+ 				mui.openWindow({
+ 					url:"../attendOrg/myJoinOrg.html"
+ 				});
+ 			}else if(code==101){
+ 				//二维码失效
+ 				alert("二维码失效");
+ 			}else if(code==102){
+ 				// 加入失败
+ 				alert("加入失败");
+ 			}else if(code==103){
+ 				alert("已加入过该组织")
+ 			}else {
+ 				alert("未知错误")
+ 			}
+ 		}
+        function failJoinOrg(data){
+ 			alert("错误");
+ 		}
+        
+        function sucessfulAttendCheck(data){
+        	console.log(JSON.stringify(data));
+        	var code=data.code;
+ 			var msg=data.msg;
+ 			if(code==200 || code==103){
+ 				//考勤签到成功或者迟到
+ 				console.log("考勤签到成功");
+ 				scan.close();
+ 				var attendTitle=data.data.attendTitle;
+ 				var orgAttendName=data.data.orgAttendName;
+ 				var attendTime=data.data.attendTime;
+ 				var attendState=data.data.attendState;
+				mui.openWindow({ 
+					url:'signSuccess.html',
+					extras:{
+						"attendTitle":attendTitle,
+						"orgAttendName":orgAttendName,
+						"attendTime":attendTime,
+						"attendState":attendState
+					}
+				});
+ 			}else if(code==101){
+ 				//二维码失效
+ 				alert("二维码失效");
+ 			}else if(code==102){
+ 				// 未参与考勤
+ 				alert("未参与考勤");
+ 			}else{
+ 				
+ 			}
+        }
+        function failAttendCheck(data){
+        	alert("请求错误");
+        }
+        </script>  
+        
+    </body>  
+</html>  

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		
+		<script type="text/javascript" src="../../js/jquery-3.2.1.min.js"></script>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<style>
+			blockquote,body,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,html,iframe,input,legend,li,ol,p,pre,td,textarea,th,ul {
+				padding: 0;
+				margin: 0
+			}
+			
+			html {
+				-webkit-overflow-scrolling: touch;
+				-webkit-text-size-adjust: 100%
+			}
+			
+			body {
+				-webkit-overflow-scrolling: touch;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box
+			}
+			
+			a,body,input,input:focus,select,select:focus,textarea,textarea:focus {
+				-webkit-tap-highlight-color: transparent;
+				outline: 0;
+			}
+			
+			li {
+				list-style-type: none
+			}
+			
+			table {
+				border-collapse: collapse;
+				border-spacing: 0
+			}
+			
+			fieldset {
+				border: none
+			}
+			
+			legend {
+				display: none
+			}
+			
+			a:active,a:hover,button {
+				outline: 0
+			}
+			
+			input[type=checkbox],input[type=radio] {
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box
+			}
+			
+			em,i {
+				font-style: normal
+			}
+			
+			a {
+				text-decoration: none;
+				-webkit-tap-highlight-color: transparent
+			}
+			
+			body {
+				font-family: '微软雅黑';
+				background: #F3F3F3
+			}
+			
+			.header {
+				height: 3rem;
+				line-height: 3rem;
+				background: #1389FE;
+				font-size: 1rem;
+				color: #fff;
+				text-align: center
+			}
+			
+			.back {
+				padding-left: 1.125rem;
+				position: absolute;
+				top: 0;
+				left: 0
+			}
+			.back i {
+				width: .75rem;
+				height: 1.25rem;
+				margin-top: .875rem;
+				background: url(../../images/log_reg_back.png) no-repeat;
+				background-size: 100%;
+				display: block
+			}
+			
+			.btn-box {
+				padding:0 1.25rem
+			}
+			.btn {
+				width:100%;
+				height:2.5rem;
+				line-height:2.5rem;
+				border-radius:.3125rem;
+				background:#1389FE;
+				font-size:1rem;
+				color:#fff;
+				text-align:center
+			}
+			
+			.error-tips {
+				height:2.5rem;
+				line-height:2.5rem;
+				background:#f4eed0;
+				font-size:.8125rem;
+				color:#5c4834;
+				text-align:center;
+				opacity:0;
+				-webkit-transition:opacity .3s linear;
+				transition:opacity .3s linear
+			}
+			.error-tips.hovers {
+				opacity:1
+			}
+			.error-tips i {
+				width:1.0625rem;
+				height:1.03125rem;
+				display:inline-block;
+				vertical-align:middle;
+				background:url(../../images/icon_tips.png) no-repeat;
+				background-size:100%
+			}
+			
+			.form-section {
+				margin: .5rem 0 1.125rem 0;
+				background: #fff;
+				padding-left: 1.125rem
+			}
+			.form-group {
+				padding: 1rem 2rem;
+				border-bottom: 1px solid #ECECEC;
+				font-size: 1rem;
+				color: #333;
+				position: relative
+			}
+			.form-group label {
+				position: absolute;
+				left: 0;
+				top: 1rem
+			}
+			.form-group:last-child {
+				border-bottom: none
+			}
+			.form-group input {
+				width: 100%;
+				padding-left: 2rem;
+				border: none;
+				color: #333;
+				font-size: 1rem;
+				font-family: '微软雅黑';
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box
+			}
+			
+			.form-two-group {
+				padding: 1rem 7rem 1rem 0
+			}
+			
+			.form-two-group input {
+				padding-left: 0
+			}
+
+			.form-two-group .vl-clear {
+				right: 7rem
+			}
+			
+			.form-two-group img {
+				position: absolute;
+				top: .6rem;
+				right: .5rem
+			}
+			.vl-clear {
+				width: .9375rem;
+				height: .9375rem;
+				display: none;
+				position: absolute;
+				top: 1.3rem;
+				right: 1.25rem;
+				background: url(../../images/icon_close.png) no-repeat;
+				background-size: 100%;
+				z-index: 1
+			}
+			
+			.send-msg {
+				position: absolute;
+				top: 1.1rem;
+				right: 1.25rem;
+				color: #21A1FE;
+				font-size: .9375rem
+			}
+			
+			.send-msg.disabled {
+				color: #888
+			}
+		</style>
+	</head>
+	<body>
+			<header>
+				<div class="header hide" id="header">
+					<a class="back" href="login.html" id="goBack"><i></i></a>
+					新密码
+				</div>
+			</header>
+			
+			<div class="error-tips" id="errorTips">
+				<i></i>
+				<span id="errorTipsText">错误提示</span>
+			</div>
+			
+			<div class="form-section">
+				<div class="form-group">
+					<label for="userPwd">新密码</label>
+					<input type="text" id="userPwd" placeholder="6-16位字母/数字" class="js-input" maxlength="12">
+					<i class="vl-clear js-vl-clear"></i>
+				</div>
+				<div class="form-group">
+					<label for="userPwdConfirm">确&#12288;认</label>
+					<input type="password" id="userPwdConfirm" placeholder="再次输入新密码" class="js-input" maxlength="16">
+					<i class="vl-clear js-vl-clear"></i>
+				</div>
+			</div>
+			
+			<div class="btn-box">
+				<div class="btn" id="accountRegFinish" data-disabled="true">完成</div>
+			</div>
+			
+	</body>
+	<!--
+    	作者：591263992@qq.com
+    	时间：2017-12-03
+    	描述：输出框的清除与错误提示
+    -->
+    <script type="text/javascript">
+    	var dialogUI,  tipModule, loginModule;
+    	closeModule = function() {
+		    function c(a) {
+		        for (var b = a.nextSibling; 1 != b.nodeType;) b = b.nextSibling;
+		        return b
+		    }
+		    function d(a) {
+		        for (var b = a.previousSibling; 1 != b.nodeType;) b = b.previousSibling;
+		        return b
+		    }
+		    var e, f, a = document.getElementsByClassName("js-input"),
+		    b = document.getElementsByClassName("js-vl-clear");
+		    for (e = 0, f = a.length; f > e; e++) a[e].addEventListener("keyup",
+		    function() {
+		        var a = this,
+		        b = c(a);
+		        b.style.display = a.value.length > 0 ? "block": "none"
+		    },
+		    !1);
+		    for (e = 0, f = b.length; f > e; e++) b[e].addEventListener("click",
+		    function() {
+		        var a = this,
+		        b = d(a);
+		        b.value = "",
+		        a.style.display = "none"
+		    })
+		} (),
+		tipModule = function() {
+		    function d(d) {
+		        a.className = "error-tips hovers",
+		        b.innerHTML = d,
+		        clearTimeout(c),
+		        c = setTimeout(function() {
+		            a.className = "error-tips"
+		        },
+		        3e3)
+		    }
+		    var c, a = document.getElementById("errorTips"),
+		    b = document.getElementById("errorTipsText");
+		    return {
+		        show: d
+		    }
+		} ();
+	
+    </script>
+	<script>
+		mui.init();
+		var email;
+		var veriCode;
+        window.onload = function(){       
+	        mui.plusReady(function(){
+	            var self = plus.webview.currentWebview();
+	            email = self.email;
+	            veriCode= self.veriCode;
+	            console.log("email=="+email+"veriCode=="+veriCode);
+	            //关闭等待框
+	            plus.nativeUI.closeWaiting();
+	            //显示当前页面
+	            mui.currentWebview.show();          	
+	        });  
+       }  
+		//下一步按钮的点击事件
+ 		document.getElementById("accountRegFinish").addEventListener('tap',function(){
+ 			var userPwd=document.getElementById("userPwd").value;
+ 			var userPwdConfirm=document.getElementById("userPwdConfirm").value;
+ 			
+ 			if(userPwd=="" || userPwdConfirm==""){
+ 				tipModule.show("不允许出现空信息");
+ 			}else if(userPwd!=userPwdConfirm){
+ 				tipModule.show("两次输入密码不一致");
+ 			}else{
+ 				var dataJson={"email":email,"veriCode":veriCode,"passwd":userPwd};
+ 				ajaxPost("forgetModify",dataJson,sucessfulRegFinish,failRegFinish);
+ 			}
+ 		});
+ 		function sucessfulRegFinish(data){
+ 			console.log(JSON.stringify(data));
+ 			var code=data.code;
+ 			var msg=data.msg;
+ 			if(code==200){
+ 				//重置密码正确
+ 				tipModule.show(msg);
+ 				mui.openWindow({
+ 					url:"login.html"
+ 				});
+ 			}else {
+ 				//重置密码失败
+ 				tipModule.show(msg);
+ 			}
+ 		}
+ 		function failRegFinish(data){
+ 			tipModule.show("注册信息请求错误");
+ 		}
+	</script>
+</html>

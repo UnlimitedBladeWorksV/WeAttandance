@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../../js/config.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-3.2.1.min.js"></script>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<style>
+			blockquote,body,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,html,iframe,input,legend,li,ol,p,pre,td,textarea,th,ul {
+				padding: 0;
+				margin: 0
+			}
+			
+			html {
+				-webkit-overflow-scrolling: touch;
+				-webkit-text-size-adjust: 100%
+			}
+			
+			body {
+				-webkit-overflow-scrolling: touch;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box
+			}
+			
+			a,body,input,input:focus,select,select:focus,textarea,textarea:focus {
+				-webkit-tap-highlight-color: transparent;
+				outline: 0;
+			}
+			
+			li {
+				list-style-type: none
+			}
+			
+			table {
+				border-collapse: collapse;
+				border-spacing: 0
+			}
+			
+			fieldset {
+				border: none
+			}
+			
+			legend {
+				display: none
+			}
+			
+			a:active,a:hover,button {
+				outline: 0
+			}
+			
+			input[type=checkbox],input[type=radio] {
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box
+			}
+			
+			em,i {
+				font-style: normal
+			}
+			
+			a {
+				text-decoration: none;
+				-webkit-tap-highlight-color: transparent
+			}
+			
+			body {
+				font-family: '微软雅黑';
+				background: #F3F3F3
+			}
+			
+			.header {
+				height: 3rem;
+				line-height: 3rem;
+				background: #1389FE;
+				font-size: 1rem;
+				color: #fff;
+				text-align: center
+			}
+			
+			.back {
+				padding-left: 1.125rem;
+				position: absolute;
+				top: 0;
+				left: 0
+			}
+			.back i {
+				width: .75rem;
+				height: 1.25rem;
+				margin-top: .875rem;
+				background: url(../../images/log_reg_back.png) no-repeat;
+				background-size: 100%;
+				display: block
+			}
+			.btn-box {
+				padding:0 1.25rem
+			}
+			.btn {
+				width:100%;
+				height:2.5rem;
+				line-height:2.5rem;
+				border-radius:.3125rem;
+				background:#1389FE;
+				font-size:1rem;
+				color:#fff;
+				text-align:center
+			}
+			
+			.error-tips {
+				height:2.5rem;
+				line-height:2.5rem;
+				background:#f4eed0;
+				font-size:.8125rem;
+				color:#5c4834;
+				text-align:center;
+				opacity:0;
+				-webkit-transition:opacity .3s linear;
+				transition:opacity .3s linear
+			}
+			.error-tips.hovers {
+				opacity:1
+			}
+			.error-tips i {
+				width:1.0625rem;
+				height:1.03125rem;
+				display:inline-block;
+				vertical-align:middle;
+				background:url(../../images/icon_tips.png) no-repeat;
+				background-size:100%
+			}
+			
+			.form-section {
+				margin: .5rem 0 1.125rem 0;
+				background: #fff;
+				padding-left: 1.125rem
+			}
+			.form-group {
+				padding: 1rem 2rem;
+				border-bottom: 1px solid #ECECEC;
+				font-size: 1rem;
+				color: #333;
+				position: relative
+			}
+			.form-group label {
+				position: absolute;
+				left: 0;
+				top: 1rem
+			}
+			.form-group:last-child {
+				border-bottom: none
+			}
+			.form-group input {
+				width: 100%;
+				padding-left: 2rem;
+				border: none;
+				color: #333;
+				font-size: 1rem;
+				font-family: '微软雅黑';
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box
+			}
+			#userUserName{
+				background-color: #FFFFFF;
+			}
+			
+			#userEmail{
+				background-color: #FFFFFF;
+			}
+
+			.form-group-flex {
+				display: box;
+				display: -webkit-box;
+				padding: 1rem 0;
+				border-bottom: 1px solid #ECECEC;
+				font-size: 1rem;
+				color: #333;
+				position: relative
+			}
+			
+			.form-group-flex1 {
+				padding-left: 1rem;
+				-webkit-box-flex: 1;
+				box-flex: 1;
+				color: #888
+			}
+			.form-group-flex1 label {
+				width: 60%;
+				display: inline-block;
+				line-height: 1
+			}
+			
+			.form-group-flex1:first-child {
+				padding-left: 0;
+				border-right: 1px solid #ECECEC
+			}
+
+			.input-radio {
+				width: .9375rem;
+				height: .9375rem;
+				opacity: 1
+			}
+		</style>
+	</head>
+	
+	<body>
+		
+		<header>
+			<div class="header hide" id="header">
+				<a class="back" id="goBack"><i></i></a>
+				个人信息
+			</div>
+		</header>
+		
+		<div class="error-tips" id="errorTips">
+			<i></i>
+			<span id="errorTipsText">错误提示</span>
+		</div>
+		
+		<div class="form-section">
+			<div class="form-group">
+				<label for="userUserName">账&#12288;号</label>
+				<input id="userUserName" type="text" placeholder="账号不可修改" maxlength="12" disabled="disabled" value="">
+				<i class="vl-clear js-vl-clear"></i>
+			</div>
+			
+			<div class="form-group">
+				<label for="userTrueName">姓&#12288;名</label>
+				<input type="text" id="userTrueName" placeholder="请输入你的真实姓名"  maxlength="32" value="">
+				<i class="vl-clear js-vl-clear"></i>
+			</div>
+			
+			<div class="form-group">
+				<label for="userEmail">邮&#12288;箱</label>
+				<input type="tel" id="userEmail" placeholder="请输入邮箱"  maxlength="11" disabled="disabled" value="">
+				<i class="vl-clear js-vl-clear"></i>
+			</div>
+			
+			<div class="form-group">
+				<label for="userPhone">手&#12288;机</label>
+				<input type="text" id="userPhone" placeholder="请输入你的手机号码" maxlength="32" value="">
+				<i class="vl-clear js-vl-clear"></i>
+			</div>
+			
+			<div class="form-group-flex">
+				<div class="form-group-flex1">
+					<label>
+						<i class="radio-box"></i>
+						<input type="radio" class="input-radio" name="sex" value="1"/>
+						GG
+					</label>
+				</div>
+				<div class="form-group-flex1">
+					<label>
+						<i class="radio-box"></i>
+						<input type="radio" class="input-radio" name="sex" value="0">
+						MM
+					</label>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label>简&#12288;介</label>
+				<input id="userDescription" type="text" placeholder="请输入个人简介"  maxlength="11" value="">
+			</div>
+			
+		</div>
+	<script type="text/javascript">
+		var dialogUI,  tipModule, loginModule;
+		closeModule = function() {
+		    function c(a) {
+		        for (var b = a.nextSibling; 1 != b.nodeType;) b = b.nextSibling;
+		        return b
+		    }
+		    function d(a) {
+		        for (var b = a.previousSibling; 1 != b.nodeType;) b = b.previousSibling;
+		        return b
+		    }
+		    var e, f, a = document.getElementsByClassName("js-input"),
+		    b = document.getElementsByClassName("js-vl-clear");
+		    for (e = 0, f = a.length; f > e; e++) a[e].addEventListener("keyup",
+		    function() {
+		        var a = this,
+		        b = c(a);
+		        b.style.display = a.value.length > 0 ? "block": "none"
+		    },
+		    !1);
+		    for (e = 0, f = b.length; f > e; e++) b[e].addEventListener("click",
+		    function() {
+		        var a = this,
+		        b = d(a);
+		        b.value = "",
+		        a.style.display = "none"
+		    })
+		} (),
+		tipModule = function() {
+		    function d(d) {
+		        a.className = "error-tips hovers",
+		        b.innerHTML = d,
+		        clearTimeout(c),
+		        c = setTimeout(function() {
+		            a.className = "error-tips"
+		        },
+		        3e3)
+		    }
+		    var c, a = document.getElementById("errorTips"),
+		    b = document.getElementById("errorTipsText");
+		    return {
+		        show: d
+		    }
+		} ();
+    </script>
+	<script>
+		mui.init();
+		var $$ =jQuery.noConflict();
+		var sexJson={"true":0,"false":1};  //true 表示男性，false 表示女性
+		mui.plusReady(function(){
+			var account=getUserUserName();
+			var name=getTrueUserName();
+			var email=getUserEmail();
+			var phone=getUserPhone();
+			var description= getUserDescription();
+			var sex=sexJson[getUserSex()];
+			document.getElementById("userUserName").value=account;
+			document.getElementById("userTrueName").value=name;
+			document.getElementById("userEmail").value=email;
+			document.getElementById("userPhone").value=phone;
+			document.getElementById("userDescription").value=description;
+			$$("input[name='sex']").eq(sex).attr("checked","checked");
+		});
+		document.getElementById("goBack").addEventListener("tap",function(){
+			update();
+			mui.back();
+ 		});
+ 		function sucessful(data){  
+ 			console.log(JSON.stringify(data));
+ 			plus.storage.setItem("userData",JSON.stringify(data.data));
+ 			console.log("保存数据成功");
+ 		}
+ 		function fail(data){
+ 			console.log("error"+data);
+ 		}
+ 		mui.init({
+		beforeback: function(){
+				update()
+				//返回true，继续页面关闭逻辑
+				return true;
+			}
+		});
+		function update(){
+			var userId=getUserId();
+ 			var userTrueName= document.getElementById("userTrueName").value;
+ 			var userPhone= document.getElementById("userPhone").value;
+ 			var userDescription = document.getElementById("userDescription").value;
+ 			var userSex= $$('input:radio:checked').val();
+ 			var sexdata={"1":true,"0":false};
+ 			var dataJson={"userTrueName":userTrueName,"userPhone":userPhone,"userDescription":userDescription,
+ 			"userSex":sexdata[userSex],"pkUserId":userId};
+ 			console.log(JSON.stringify(dataJson));
+ 			ajaxPostAuthorization("updateUserInfo",dataJson,sucessful,fail);
+		}
+	</script>
+		
+	</body>
+</html>

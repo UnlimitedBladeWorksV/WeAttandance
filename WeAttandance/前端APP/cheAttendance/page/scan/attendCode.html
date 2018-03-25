@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="../../js/qrcode/jquery-1.4.2.min.js"></script>	
+		<script type="text/javascript" src="../../js/qrcode/jquery.qrcode.js"></script>  
+		<script type="text/javascript" src="../../js/qrcode/qrcode.js"></script>  
+		<script src="../../js/config.js"></script>
+		<style>
+			blockquote,body,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,html,iframe,input,legend,li,ol,p,pre,td,textarea,th,ul {
+				padding: 0;
+				margin: 0
+			}
+			
+			html {
+				-webkit-overflow-scrolling: touch;
+				-webkit-text-size-adjust: 100%;
+				overflow-y: hidden;
+			}
+			
+			body {
+				-webkit-overflow-scrolling: touch;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				overflow-y: hidden;
+			}
+			
+			a,body,input,input:focus,select,select:focus,textarea,textarea:focus {
+				-webkit-tap-highlight-color: transparent;
+				outline: 0;
+			}
+			
+			li {
+				list-style-type: none
+			}
+			
+			table {
+				border-collapse: collapse;
+				border-spacing: 0
+			}
+			
+			fieldset {
+				border: none
+			}
+			
+			legend {
+				display: none
+			}
+			
+			a:active,a:hover,button {
+				outline: 0
+			}
+			
+			input[type=checkbox],input[type=radio] {
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			
+			em,i {
+				font-style: normal;
+			}
+			
+			a {
+				text-decoration: none;
+				-webkit-tap-highlight-color: transparent
+			}
+			
+			body {
+				font-family: '微软雅黑';
+				background: #F3F3F3;
+			}
+			/* 遮罩层*/
+		.mask{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			background: rgba(0,0,0,0.4);
+			z-index: 100; 
+		}
+		.content{
+			position: absolute;
+			bottom: 22.5%;
+			width: 100%;
+			height: 55%; 
+			z-index: 101;	
+		}
+		.bottomDiv{
+			position: absolute; 
+			bottom: 0%;
+			width: 100%;
+			height: 20%;
+			z-index: 101;	
+		}
+		#qrcodeTable{
+			width: 250px;
+			margin: auto;
+		}
+		.content p{
+			margin-top: 1rem;
+			text-align: center;
+			font-size: 1.2rem;
+			color: #ffffff;
+		}
+		.bottomDiv p{
+			margin-top: 0.4rem;
+			text-align: center;
+			font-size: 1.2rem;
+			color: #ffffff;
+		}
+		
+		.close img{ 
+			width: 4rem; 
+		}
+		.close p{ 
+			color: #fff; 
+		}
+		.close{
+			text-align: center;
+			bottom:20%; 
+		}
+		</style>
+	</head>
+
+	<body>
+		<div class="mask"></div>
+		<div class="content">
+			<div id="qrcodeTable"></div>  
+			<p id="refresh"></p>		
+		</div>
+		<div class="bottomDiv">
+			<div class="close" id="close">
+				<img src="../../images/delete.png"/>
+				<p>关闭</p>
+			</div>		
+		</div>
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script type="text/javascript"> 
+		mui.init();
+		var time;  // 刷新时间
+		var clock;
+		var dataJson;
+		mui.plusReady(function(){
+			var self=plus.webview.currentWebview();
+			var attendId=self.attendId;
+			console.log("attend=="+attendId);
+			var userId=getUserId();
+			dataJson={"attendId":attendId,"userId":userId};
+			ajaxPostAuthorization("getNewAttendQrCode",dataJson,sucessful,fail);
+		});
+		function sucessful(data){
+			console.log(JSON.stringify(data));
+			var code=data.code;
+			if(code==101){
+				alert("该考勤已结束");
+			}else{
+				var qrcode=data.data.qrCode;
+				time=data.data.attendQrCodeRefreshSecond;
+				console.log("time:"+time);
+				console.log("qrcode:"+qrcode);
+				refreshQrcode();
+				var $$=jQuery.noConflict();
+				$$(document).ready(function(){ 
+				    $$("#qrcodeTable").qrcode({ 
+				        render  : "table", 
+				        text    : qrcode, 
+				        width:"250", 
+				        height:"250" 
+				    }); 
+				}); 	
+			}
+					
+		}
+		function fail(data){
+			console.log("请求错误");
+		}
+		document.getElementById("close").addEventListener("tap",function (){
+			mui.back();
+		});
+		// 刷新二维码
+		function refreshQrcode(){
+			document.getElementById("refresh").innerText="距离二维码刷新时间还剩"+time+"s";
+			clock=setInterval(doLoop,1000);
+		}
+		function doLoop(){
+			time--;
+			if(time>0){
+				document.getElementById("refresh").innerText="距离二维码刷新时间还剩"+time+"s";
+			}else{
+				clearInterval(clock);
+				// 想清除考勤二维码信息
+				document.getElementById("qrcodeTable").innerHTML="";
+				ajaxPostAuthorization("getNewAttendQrCode",dataJson,sucessful,fail);
+			}
+		}
+	</script>	
+</html>

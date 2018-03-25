@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!--标准mui.css-->
+	<title></title>
+    <script src="../../js/mui.min.js"></script> 
+	<script src="../../js/config.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    </script>
+    <style>
+			blockquote,body,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,hr,html,iframe,input,legend,li,ol,p,pre,td,textarea,th,ul {
+				padding: 0;
+				margin: 0
+			}
+			
+			html {
+				-webkit-overflow-scrolling: touch;
+				-webkit-text-size-adjust: 100%;
+				overflow-y: hidden;
+			}
+			
+			body {
+				-webkit-overflow-scrolling: touch;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				overflow-y: hidden;
+			}
+			
+			a,body,input,input:focus,select,select:focus,textarea,textarea:focus {
+				-webkit-tap-highlight-color: transparent;
+				outline: 0;
+			}
+			
+			li {
+				list-style-type: none
+			}
+			
+			table {
+				border-collapse: collapse;
+				border-spacing: 0
+			}
+			
+			fieldset {
+				border: none
+			}
+			
+			legend {
+				display: none
+			}
+			
+			a:active,a:hover,button {
+				outline: 0
+			}
+			
+			input[type=checkbox],input[type=radio] {
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			
+			em,i {
+				font-style: normal;
+			}
+			
+			a {
+				text-decoration: none;
+				-webkit-tap-highlight-color: transparent
+			}
+			
+			body {
+				font-family: '微软雅黑';
+				background: #F3F3F3
+			}
+			
+			.header {
+				position: fixed;
+				width: 100%;
+				height: 3rem;
+				line-height: 3rem;
+				background: #1389FE;
+				font-size: 1rem;
+				color: #fff;
+				text-align: center;
+				z-index: 9999;
+			}
+			
+			.back {
+				padding-left: 1.125rem;
+				position: absolute;
+				top: 0;
+				left: 0
+			}
+			.back i {
+				width: .75rem;
+				height: 1.25rem;
+				margin-top: .875rem;
+				background: url(../../images/log_reg_back.png) no-repeat;
+				background-size: 100%;
+				display: block
+			}
+			
+			li{
+				margin-left:0.3rem ;
+				margin-right: 0.3rem;
+				margin-bottom:0rem;
+				background-color: #ffffff;
+				line-height: 1.6rem;
+			}
+			.p1{
+				font-size: 1rem;
+				padding-top:0.25rem;
+				margin: 0.1rem 0rem 0.1rem 1rem;
+				width: 100%;
+			}
+			.p2{
+				font-size: 0.8rem;
+				padding-bottom: 0.18rem;
+				margin: 0.15rem 0rem 0.15rem 1rem;
+				color: #999;
+				width: 100%;
+			}
+			.scrollPanel{
+				width: 100%;
+				overflow: auto;
+				overflow-x: hidden; 
+				overflow-y: hidden;
+			}
+			.itemList{  
+			    height: 100%;
+			    width: 100%; 
+			    overflow-x: hidden;
+			    overflow-y: auto;
+			   
+			} 
+			.full{
+				height: 3.15rem;
+			}
+			
+			.new_att{
+				position: absolute;
+				text-align: center;
+				bottom: 5.5rem;
+				width: 25%;
+				left: 0%;
+			}
+			.user_message{
+				position: absolute;
+				text-align: center;
+				bottom: 5.5rem;
+				width: 25%;
+				left: 25%;
+			}
+			.share_scan{
+				position: absolute;
+				text-align: center;
+				bottom: 5.5rem;
+				width: 25%;
+				left: 50%;
+			}
+			.delete_org{
+				position: absolute;
+				text-align: center;
+				bottom: 5.5rem;
+				width: 25%;
+				left: 75%;
+			}
+			.new_att img,.user_message img,.share_scan img,.delete_org img{
+				width: 2.5rem;
+				height: 2.5rem;
+			}
+			
+			.delete{
+				width: 3rem;
+				height: 3rem;
+				position: absolute;
+				left: 0;
+				right: 0;
+				margin: auto;
+				bottom: 1.2rem;
+			}
+			
+			.content{
+				background-color: #eee;
+				width: 100%;
+				height: 11rem;
+				position:fixed;
+				bottom: 0;
+			}
+			.bottomDiv{
+				width: 100%;
+				height: 11rem;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+				<div class="header" id="header">
+					<a class="back mui-action-back" id="goBack"><i></i></a>
+					<p id="title"></p>
+				</div>
+		</header>
+		<div>
+		<div class="scrollPanel" id="scrollPanel">
+			<ul class="itemList" id="itemList">
+			</ul>
+		</div>
+
+			<div class="content">
+				<div class="new_att" id="new_att">
+					<img class="record_img" src="../../images/new_att.png"/>
+					<p>新建考勤</p>
+				</div>
+				<div class="user_message" id="user_message">
+					<img src="../../images/uesr_manage.png"/>
+					<p>人员管理</p>
+				</div>
+				<div class="share_scan" id="share_scan">
+					<img class="record_img" src="../../images/share_scan.png"/>
+					<p>分享加入</p>
+				</div>
+				<div class="delete_org" id="delete_org">
+					<img src="../../images/delete_org.png"/>
+					<p>删除组织</p>
+				</div>
+				
+				<img class="delete" id="delete" src="../../images/delete.png"/>
+			</div>
+		
+		</div>
+		
+	<script>
+		mui.init({
+		  gestureConfig:{
+		   tap: true, //默认为true
+		   doubletap: true, //默认为false
+		   longtap: true, //默认为false
+		   swipe: true, //默认为true
+		   drag: true, //默认为true
+		   hold:false,//默认为false，不监听
+		   release:false//默认为false，不监听
+		  }
+		});
+		window.addEventListener('refresh',function(e){
+			location.reload();
+		});
+		//ul点击事件
+		mui(".itemList").on('tap','.item',function(){		
+			  //获取id
+			var id = this.getAttribute("id");
+			mui.openWindow({
+				url:'../scan/attendCode.html',
+				extras:{
+			        attendId:id	       
+			    }
+			});
+		}); 
+		/**
+		 *   传过来三个参数
+		 *    组织ID 组织名称  组织二维码
+		 */
+		var orgId;
+		mui.plusReady(function () {
+			var self = plus.webview.currentWebview();
+			orgId = self.orgId;
+			var attendName = self.attendName; 
+			document.getElementById("title").innerText=attendName;
+			updateData();
+		});
+			//填充考勤信息
+		function attend_data_fill(attend_data){
+			var attends=attend_data.data;
+			var list="<div class=\"full\"></div>";
+			for(var i=0,l=attends.length;i<l;i++){
+				var attendId=attends[i]["attendId"];
+				var attendName=attends[i]["attendTitle"];
+				var attendLocation=attends[i]["attendLocation"];
+				var startWorkDate=attends[i]["attendStartTime"];
+				var overWorkDate=attends[i]["attendOverTime"];
+				var timeSlot=getLocalTime(startWorkDate,overWorkDate);
+				list+= "    <li class=\"item\"  id=\""+attendId+"\" >"
+					+	"		<div> "
+					+	"			<p class=\"p1\">"+attendName+"["+attendLocation+"]"+"<p>"
+					+	"				<p class=\"p2\">"+timeSlot+"<p>"	
+					+	"		</div>"
+					+	"	</li>"
+			}
+			list+="<div class=\"bottomDiv\"></div>";
+			document.getElementById("itemList").innerHTML=list;
+			for(var i=0,l=attends.length;i<l;i++){
+				var attendId=attends[i]["attendId"];
+				//列表长按点击删除事件
+				document.getElementById(attendId).addEventListener("longtap",function(){
+					var id=this.getAttribute("id");
+					var btnArray = ['否', '是'];
+				    mui.confirm('确认删除该考勤？', 'DELETE Confirmation', btnArray, function(e) {
+				        if (e.index == 1) {
+				          	//确认删除
+				          	var userId=getUserId();
+				          	var dataJson={"attendId":id,"userId":userId};
+				          	console.log("dataJson=="+JSON.stringify(dataJson));
+				          	ajaxPostAuthorization("deleteAttend",dataJson,sucessDeleteAttend,failDeleteAttend);
+				        } else {
+				            //取消 
+				        }
+				    });
+				});
+			}
+		}
+		function sucessDeleteAttend(data){
+			console.log(JSON.stringify(data));
+			if(data.code==200){
+				updateData();
+				plus.nativeUI.toast("删除成功");
+			}else if(data.code==101){
+				plus.nativeUI.toast("删除失败");
+			}
+		}
+		function failDeleteAttend(data){
+			alert("请求失败");
+		}
+			// 将时间戳转为普通日期格式
+		function getLocalTime(startTime,overTime) {  		
+	   		// 将时间戳转为普通日期格式				
+			   var startdate = new Date(startTime);
+			   var overdate = new Date(overTime);
+			   var start_time = startdate.toLocaleTimeString();
+			   var over_time = overdate.toLocaleTimeString();
+			   var str_date = startdate.toLocaleDateString();			 
+			   var result=str_date+" "+start_time+"----"+over_time;			 
+			  return result;
+		}
+		// 将时间戳转为普通日期格式
+		function getTimeFromDate(time) {  		
+	   		// 将时间戳转为普通日期格式				
+			   var strdate = new Date(time);	
+			   var result= strdate.toLocaleString();	 
+			 return result;
+		}
+		// 分享二维码
+		document.getElementById("share_scan").addEventListener("tap",function(){
+			mui.openWindow({
+				url:'../scan/orgQrCode.html',
+				extras:{
+			        orgId:orgId
+		    	}
+			});
+		});
+		// 创建考勤
+		document.getElementById("new_att").addEventListener("tap",function(){
+			mui.openWindow({
+				url:'../attend/createAtt.html',
+				extras:{
+			        orgId:orgId
+		    	}
+			});
+		});
+		
+		// 人员管理
+		document.getElementById("user_message").addEventListener("tap",function(){
+			var dataJson={"orgAttendId":orgId};
+			ajaxGetAuthorization("getUserManageList",dataJson,sucessfulGetOrgPeople,failGetOrgPeople);
+		});
+		// 删除组织
+		document.getElementById("delete_org").addEventListener("tap",function(){
+			var userId=getUserId();
+			var dataJson={"orgAttendId":orgId,"userId":userId};
+			console.log(JSON.stringify(dataJson));
+			ajaxPostAuthorization("deleteOrgAttend",dataJson,sucessfulDelete,failDelete);
+		});
+		document.getElementById("delete").addEventListener("tap",function(){
+			mui.back();
+		});
+		function sucessfulDelete(data){
+			console.log(JSON.stringify(data));
+			var code=data.code;
+			if(code==200){
+				alert("删除成功");
+				mui.openWindow({
+					url:"myCreateOrg.html"
+				});
+			}else if(code==101){
+				alert("删除失败");
+			}
+		}
+		function failDelete(data){
+			alert("请求失败");
+		}
+		// 刷新页面数据
+		function updateData(){
+			var jsonData={"orgAttendId":orgId}
+			ajaxGetAuthorization("getAttendItemsByClickOrgAttend",jsonData,sucessfulGetOrgAttend,failGetOrgAttend)
+		}
+		function sucessfulGetOrgAttend(data){
+			//服务器返回响应，根据响应结果，分析是否登录成功；
+			console.log("myOrgDetail getAttend=="+JSON.stringify(data));				
+			attend_data_fill(data);
+		}
+		function failGetOrgAttend(data){
+			alert(data);
+		}
+		// 组织人员列表
+		function sucessfulGetOrgPeople(data){
+			//服务器返回响应，根据响应结果，分析是否登录成功；
+			console.log("myOrgPeople"+JSON.stringify(data));				
+			mui.openWindow({
+				url:"../people/orgPeople.html",
+				extras:{
+					"orgAttendId":orgId
+				}
+			})
+		}
+		function failGetOrgPeople(data){
+			alert("获取人员列表失败");
+			alert(data);
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<style>
+			body {
+				font-family:'微软雅黑';
+				background:#F3F3F3
+			}
+			html{
+			    font-size:16px;
+			}
+			.header {
+				height: 3rem; 
+				line-height: 3rem;
+				background-color: #199FFF;
+				font-size: 1rem;
+				color: #fff;
+				text-align: center
+			}
+		
+			.user_menu {
+				padding-left: 1.125rem;
+				position: absolute;
+				top: 0;
+				left: 0
+			}
+			.user_menu i {
+				width: 1.25rem;
+				height: 1.25rem;
+				margin-top: .875rem;
+				background: url(../../images/user.png) no-repeat;
+				background-size: 100%;
+				display: block
+			}
+			
+			.scan {
+				padding-left: 1.125rem;
+				position: absolute;
+				top: 0;
+				right: 0.95rem;
+			}
+			.scan i {
+				width: 1.25rem;
+				height: 1.25rem;
+				margin-top: .875rem;
+				background: url(../../images/scan.png) no-repeat;
+				background-size: 100%;
+				display: block
+			}
+			
+			.top_time{
+				width: 100%;
+				height: 32%;
+				background-color: #199FFF;
+				background-size: contain;
+				background-position:center; 
+				position: relative;
+			}
+			.top_time h2{
+				position: absolute;
+				top: 8%;
+				left:5%;
+				color: #FFF;
+			}
+			.top_time p{
+				position: absolute;
+				top: 30%;
+				left:5%;
+				color: #FFF;
+			}
+			.top_weather{
+				position: absolute;
+				right: 0.5rem;
+				bottom: 0.5rem;
+				color: #FFF;
+			}
+
+			.sent{
+				font-size: 0.95rem;
+				color: #FFF;
+				position: absolute;
+				bottom: 1rem;
+				right: 0.25rem;
+			}
+			
+			.main-menu{
+				height: 9%;
+				width: 100%;
+			}
+			
+			.main-menu ul{
+				height: 100rem;
+				width: 100%;
+			    margin: 0.1rem;
+			    padding: 0.1%;
+			    list-style: none;
+			}
+			.main-menu ul:after{
+			    display:block;
+			    clear: both;
+			}
+			.main-menu li{
+				height: 6rem;
+			    padding:0 3.0927835051546393%; // x*100/(100-x); x值越大，误差越大。当x=3，宽度为500，误差在0.5px之内；
+			    font-size: 1rem;
+			    text-align: center;
+			    float: left;
+			    width: 32.45%;
+			    background: #FFFFFF;
+				list-style:none;
+
+				font-size: 0.75rem;;
+				color: #777;
+				line-height:10.5rem ;
+				margin-left: 0.1rem;
+				margin-bottom: 0.1rem;
+			}
+			li.attend{
+				background-image: url(../../images/attend.png);
+				background-size: 30%;;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+
+			li.create_att{
+				background-image: url(../../images/create_att.png);
+				background-size: 30%;;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			
+			li.att_record{
+				background-image: url(../../images/att_record.png);
+				background-size: 28%;;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			li.add_org{
+				background-image: url(../../images/add_org.png);
+				background-size: 28%;;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			li.create_org{
+				background-image: url(../../images/create_org.png);
+				background-size: 28%;;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			li.export_table{
+				background-image: url(../../images/feedback.png);
+				background-size: 25%;;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+			
+			.mui-off-canvas-left{
+				background-color: #3B383F;
+			}
+			
+			.top{
+				width:100%;
+            	height:12rem;
+            	position: relative;     
+           		
+			}
+			
+			.div_img{
+				width: 100%
+				height: 3rem;
+				position: relative;
+				top: 3rem;
+        		text-align: center;
+			}
+			.img_head{
+				width: 4rem;
+				height: 4rem;
+				border-radius: 2rem;
+			}
+			
+			.name{
+				width: 100%;
+				height: 5rem;
+				color: #FFFFFF;
+				position: absolute;
+				top: 8rem;
+				text-align: center;
+			}
+			.intro{
+				width: 100%;
+				height: 5rem;
+				color: #EEE;
+				position: absolute;
+				top: 10rem;
+				font-size: 0.75rem;
+				text-align: center;
+			}
+
+			ul#menu_nav {
+				list-style-type: none;
+				padding: 2rem 0rem 0rem 2rem;
+				margin: 0;
+			}
+			#menu_nav a:link, #menu_nav a:visited {
+				display: block;
+				width: 150px;
+				padding: 10px 0 16px 32px;
+				color: #FFF;
+				background-size: 15%;
+				text-decoration: none;
+				font-size: 1rem;
+			}
+			.user_message{
+				background: url(../../images/user_message.png) left no-repeat;
+			}
+			.alter_pw{
+				background: url(../../images/alter_pw.png) left no-repeat;
+			}
+			.check_update{
+				background: url(../../images/check_update.png) left no-repeat;
+			}
+			.about_us{
+				background: url(../../images/about_us.png) left no-repeat;
+			}
+			#menu_nav a:hover {
+				color: #199FFF;
+			}
+			.login-exit{
+				width: 100%;
+			}
+			.exit {
+				position: absolute;
+				bottom: 0.95rem;
+				right: 0.95rem;
+				color: #FFF;
+				text-decoration: none;
+				font-size: 1rem;
+			}
+			.exit i {
+				width: 1.25rem;
+				height: 1.25rem;
+				padding: 0.7rem;
+				background: url(../../images/exit.png) left no-repeat;
+				background-size: 100%;
+				display: inline
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 侧滑导航根容器 -->
+		<div class="mui-off-canvas-wrap mui-draggable mui-scalable" >
+		  <!-- 菜单容器 -->
+		  <aside class="mui-off-canvas-left" >
+		  	<!-- 头像部分-->
+			<div class="top">
+				<div class="div_img">
+					<img class="img_head" src="../../images/headImg.jpg" />
+				</div>
+				<label class="name" id="name">无恒星</label>
+				<label class="intro" id="message">一万年太久，只争朝夕。</label>
+			</div>
+		  	
+			<ul id="menu_nav">
+				<li><a class="user_message" href="#" id="personalInf">个人信息</a></li>
+				<li><a class="alter_pw" id="alter_pw" href="#">修改密码</a></li>
+				<li><a class="check_update" href="#" id="updateSoft">软件更新</a></li>
+				<li><a class="about_us" href="#">关于我们</a></li>
+			</ul>
+			
+			<div class="login-exit">
+				<a class="exit" id="logout"><i></i>退出</a>
+			</div>
+			
+		  </aside>
+		  
+		  <!-- 主页面容器 -->
+		  <div class="mui-inner-wrap">
+			
+		    <div class="mui-content mui-scroll-wrapper">
+		        
+		        <header>
+					<div class="header hide" id="header">
+						<a class="user_menu" href="login.html" id="user"><i></i></a>
+						<a class="scan" id="scan"><i></i></a>
+					</div>
+				</header>
+				
+				<div class="top_time">
+					<h2 id="week">星期二</h2>
+					<p id="date">2017年7月7日</p>
+					<iframe class="top_weather" width="140" scrolling="no" height="50" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=8&color=%23FFFFFF&icon=1&num=1&site=12"></iframe>
+				</div>
+					
+
+				<div class="main-menu">
+					<ul>
+						<li class="attend" id="sign">签到</li>
+						<li class="create_att" id="create_att">创建考勤</li>
+						<li class="att_record" id="att_record">考勤记录</li>
+						<li class="add_org" id="join_org">我加入的组织</li>
+						<li class="create_org" id="create_org">我创建的组织</li>
+						<li class="export_table"id="feedback">意见反馈</li>
+					</ul>
+				</div>
+				 
+		    </div>  
+		  </div>
+		  
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="../../js/mui.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-3.2.1.min.js"></script>
+<script src="../../js/config.js"></script>
+<script ype="text/javascript">
+	/**
+		mui.init({
+			beforeback:function(){
+				var list=plus.webview.currentWebview().opener();
+				mui.fire(list,'refresh');
+				return true;
+			}
+		});
+		window.addEventListener('refresh',function(e){
+			//执行刷新
+			location.reload();
+		});
+	 * 
+	 */
+	
+	var $$=jQuery.noConflict();
+	 //用户名输入框失去焦点  
+	var myDate = new Date();
+	var year= myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+	var month= myDate.getMonth();       //获取当前月份(0-11,0代表1月)
+	var day= myDate.getDate();        //获取当前日(1-31)	
+	var str_date=year+"年"+(month+1)+"月"+day+"日";
+	var week= myDate.getDay();         //获取当前星期X(0-6,0代表星期天)
+	var Week = ['日','一','二','三','四','五','六'];  
+    var str_week = ' 星期' + Week[myDate.getDay()];  
+	document.getElementById("week").innerText=str_week;
+	document.getElementById("date").innerText=str_date;
+	mui.plusReady(function(){
+		var name=getTrueUserName();
+		document.getElementById("name").innerText=name;
+		var userDescription=getUserDescription();
+		if(userDescription==""){
+			userDescription="个人简介";
+		}
+		document.getElementById("message").innerText=userDescription;
+	});
+	var $$ = jQuery.noConflict();
+	//点击后文字变文本框且可修改
+	
+	//用户按钮--打开侧滑菜单
+    document.getElementById("user").addEventListener('tap',function(){          
+    	mui('.mui-off-canvas-wrap').offCanvas('show');   	
+	});
+	// 扫码按钮
+    document.getElementById("scan").addEventListener('tap',function(){          
+   
+    	mui.plusReady(function(){
+    		var wait= plus.nativeUI.showWaiting();
+	    	var w= plus.webview.create("../scan/scanQRCode.html");
+			var close=plus.nativeUI.closeWaiting();
+			w.show();
+		//	plus.nativeUI.closeWaiting();
+    	});
+    });
+	// 创建考勤按钮
+    document.getElementById("create_att").addEventListener('tap',function(){          
+    	mui.openWindow({
+    		url:"../attend/createAtt.html"
+    	});
+	});
+	// 我加入的组织按钮
+    document.getElementById("join_org").addEventListener('tap',function(){          
+    	mui.openWindow({
+    		url:"../attendOrg/myJoinOrg.html"
+    	});
+	});
+	// 我创建的组织按钮
+    document.getElementById("create_org").addEventListener('tap',function(){          
+    	mui.openWindow({		
+    		url:"../attendOrg/myCreateOrg.html"
+    	});
+	});
+	// 考勤记录按钮
+    document.getElementById("att_record").addEventListener('tap',function(){          
+    	mui.openWindow({
+    		url:"../attRecord/seeAttance.html"
+    	});
+	});
+	// 修改密码按钮
+    document.getElementById("alter_pw").addEventListener('tap',function(){          
+    	mui.openWindow({
+    		url:"alterPw.html"
+    	});
+	});
+	// 个人信息按钮
+    document.getElementById("personalInf").addEventListener('tap',function(){          
+    	mui.openWindow({
+    		url:"alterUserData.html"
+    	});
+	});
+	//软件更新按钮
+	document.getElementById("updateSoft").addEventListener("tap",function(){
+		console.log("软件更新");
+		plus.nativeUI.toast("当前已是最新版本");
+	});
+	//登出按钮
+	document.getElementById("logout").addEventListener("tap",function(){
+		console.log("登出");
+		mui.plusReady(function(){
+			plus.storage.clear();
+			var w= plus.webview.create("../login/login.html");
+			w.show();
+			plus.webview.currentWebview().close();
+		})
+	});
+	// 签到
+	document.getElementById("sign").addEventListener("tap",function(){
+		mui.openWindow({
+			url:"sign.html"
+		});
+	});
+	// 签到
+	//意见反馈
+	document.getElementById("feedback").addEventListener("tap",function(){
+		mui.openWindow({
+			url:"feedback.html"
+		});
+	});
+</script>
+  

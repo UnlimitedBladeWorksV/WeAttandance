@@ -1,0 +1,89 @@
+# Server configuration
+server:
+  address: 183.26.247.151
+  port: 8080
+
+# Mybatis configuration
+mybatis:
+  config-locations: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.demo.attend.domain.entity
+
+
+# Spring configuration
+spring:
+  datasource:
+    initialize: false
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/attendance7?useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: 123456
+
+  mail:
+      host: smtp.163.com
+      username: checkattend@163.com
+      password: c123456
+      properties.mail.smtp.starttls.enable: true
+      properties.mail.smtp.starttls.required: true
+      properties.mail.smtp.auth: true
+      properties.mail.smtp.connectiontimeout: 5000
+      properties.mail.smtp.timeout: 5000
+      properties.mail.smtp.writetimeout: 5000
+      default-encoding: utf-8
+
+# JWT
+jwt:
+  header: Authorization
+  secret: mySecretAttendC
+  expiration: 60000000000000 # TOKEN 有效期 、毫秒
+  tokenHead: "ttkoenn "
+  route:
+    authentication:
+      path: "auth"
+      refresh: "refresh"
+      register: "auth/register"
+# Except jwt Route
+path:
+  ########### ALL #############
+  getVerificationCode: "/getVerificationCode"
+  forgetPasswd: "/forgetPasswd"
+  forgetVerify: "/forgetVerify"
+  forgetModify: "/forgetModify"
+  ########### USER #############
+  #### OrgAttendController
+  myCreatedOrgAttend: "/myCreatedOrgAttend"
+  myJoinedOrgAttend: "/myJoinedOrgAttend"
+  createOrgAttend: "/createOrgAttend"
+  joinOrgAttendByQrCode: "/joinOrgAttendByQrCode"
+  deleteOrgAttend: "/deleteOrgAttend"
+  withdrawOrgAttend: "/withdrawOrgAttend"
+  getOrgAttend: "/getOrgAttend"
+  updateOrgAttend: "/updateOrgAttend"
+  #### AttendController
+  createAttend: "/createAttend"
+  getAttendItemsByClickOrgAttend: "/getAttendItemsByClickOrgAttend"
+  getAttendDetailByClickListItem: "/getAttendDetailByClickListItem"
+  attendCheck: "/attendCheck"
+  updateAttend: "/updateAttend"
+  deleteAttend: "/deleteAttend"
+  #### UserController
+  getUserManageList: "/getUserManageList"
+  deleteUserFromOrgAttendByList: "/deleteUserFromOrgAttendByList"
+  updatePasswd: "/updatePasswd"
+  updateUserInfo: "/updateUserInfo"
+  #### AttendRecordController
+  getUserAttendRecordByDate: "/getUserAttendRecordByDate"
+  getMyCreatedOrgAttendRecordByDate: "/getMyCreatedOrgAttendRecordByDate"
+  getUserAttendByState: "/getUserAttendByState"
+  #### QrCodeController
+  qrCodeCheck: "/qrCodeCheck"
+  getNewAttendQrCode: "/getNewAttendQrCode"
+  getOrgAttendQrCode: "/getOrgAttendQrCode"
+
+# Logging configuration
+logging:
+  level:
+    org.springframework:
+      data: DEBUG
+      security: DEBUG
+

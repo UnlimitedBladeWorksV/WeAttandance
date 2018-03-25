@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.attend.mapper.AttendOrgMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.attend.domain.entity.AttendOrg" >
+    <constructor >
+      <idArg column="PK_ORG_ATTEND_ID" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="ORG_ATTEND_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ORG_ATTEND_CREATE_BY_ID" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="ORG_ATTEND_CREATE_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ORG_ATTEND_PEOPLE_NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ORG_ATTEND_QR_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ORG_ATTEND_QR_CODE_EFFECTIVE_DAYS" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ORG_ATTEND_QR_CODE_OVERDUE" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ORG_ATTEND_DESCRIPTION" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PK_ORG_ATTEND_ID, ORG_ATTEND_NAME, ORG_ATTEND_CREATE_BY_ID, ORG_ATTEND_CREATE_TIME, 
+    ORG_ATTEND_PEOPLE_NUM, ORG_ATTEND_QR_CODE, ORG_ATTEND_QR_CODE_EFFECTIVE_DAYS, ORG_ATTEND_QR_CODE_OVERDUE, ORG_ATTEND_DESCRIPTION
+  </sql>
+
+  <select id="set_foreign_key_off" >
+    SET FOREIGN_KEY_CHECKS = 0
+  </select>
+  <select id="set_foreign_key_on" >
+    SET FOREIGN_KEY_CHECKS = 1
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_org_attend
+    where PK_ORG_ATTEND_ID = #{pkOrgAttendId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByOrgAttendCreateById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from t_org_attend
+    where ORG_ATTEND_CREATE_BY_ID = #{orgAttendCreateById, jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_org_attend
+    where PK_ORG_ATTEND_ID = #{pkOrgAttendId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="pkOrgAttendId" parameterType="com.demo.attend.domain.entity.AttendOrg" >
+    insert into t_org_attend (PK_ORG_ATTEND_ID, ORG_ATTEND_NAME, ORG_ATTEND_CREATE_BY_ID, 
+      ORG_ATTEND_CREATE_TIME, ORG_ATTEND_PEOPLE_NUM, 
+      ORG_ATTEND_QR_CODE, ORG_ATTEND_QR_CODE_OVERDUE, ORG_ATTEND_DESCRIPTION, ORG_ATTEND_QR_CODE_EFFECTIVE_DAYS
+      )
+    values (#{pkOrgAttendId,jdbcType=BIGINT}, #{orgAttendName,jdbcType=VARCHAR}, #{orgAttendCreateById,jdbcType=BIGINT}, 
+      #{orgAttendCreateTime,jdbcType=TIMESTAMP}, #{orgAttendPeopleNum,jdbcType=INTEGER}, 
+      #{orgAttendQrCode,jdbcType=VARCHAR}, #{orgAttendQrCodeOverdue,jdbcType=TIMESTAMP},
+      #{orgAttendDescription, jdbcType=VARCHAR}, #{orgAttendQrCodeEffectiveDays, jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.attend.domain.entity.AttendOrg" >
+    insert into t_org_attend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkOrgAttendId != null" >
+        PK_ORG_ATTEND_ID,
+      </if>
+      <if test="orgAttendName != null" >
+        ORG_ATTEND_NAME,
+      </if>
+      <if test="orgAttendCreateById != null" >
+        ORG_ATTEND_CREATE_BY_ID,
+      </if>
+      <if test="orgAttendCreateTime != null" >
+        ORG_ATTEND_CREATE_TIME,
+      </if>
+      <if test="orgAttendPeopleNum != null" >
+        ORG_ATTEND_PEOPLE_NUM,
+      </if>
+      <if test="orgAttendQrCode != null" >
+        ORG_ATTEND_QR_CODE,
+      </if>
+      <if test="orgAttendQrCodeOverdue != null" >
+        ORG_ATTEND_QR_CODE_OVERDUE,
+      </if>
+      <if test="orgAttendDescription != null" >
+        ORG_ATTEND_DESCRIPTION,
+      </if>
+      <if test="orgAttendQrCodeEffectiveDays != null" >
+        ORG_ATTEND_QR_CODE_EFFECTIVE_DAYS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkOrgAttendId != null" >
+        #{pkOrgAttendId,jdbcType=BIGINT},
+      </if>
+      <if test="orgAttendName != null" >
+        #{orgAttendName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAttendCreateById != null" >
+        #{orgAttendCreateById,jdbcType=BIGINT},
+      </if>
+      <if test="orgAttendCreateTime != null" >
+        #{orgAttendCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgAttendPeopleNum != null" >
+        #{orgAttendPeopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="orgAttendQrCode != null" >
+        #{orgAttendQrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAttendQrCodeOverdue != null" >
+        #{orgAttendQrCodeOverdue,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgAttendDescription != null" >
+        #{orgAttendDescription, jdbcType=VARCHAR},
+      </if>
+      <if test="orgAttendQrCodeEffectiveDays != null" >
+        #{orgAttendQrCodeEffectiveDays, jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.attend.domain.entity.AttendOrg" >
+    update t_org_attend
+    <set >
+      <if test="orgAttendName != null" >
+        ORG_ATTEND_NAME = #{orgAttendName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAttendCreateById != null" >
+        ORG_ATTEND_CREATE_BY_ID = #{orgAttendCreateById,jdbcType=BIGINT},
+      </if>
+      <if test="orgAttendCreateTime != null" >
+        ORG_ATTEND_CREATE_TIME = #{orgAttendCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgAttendPeopleNum != null" >
+        ORG_ATTEND_PEOPLE_NUM = #{orgAttendPeopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="orgAttendQrCode != null" >
+        ORG_ATTEND_QR_CODE = #{orgAttendQrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAttendQrCodeOverdue != null" >
+        ORG_ATTEND_QR_CODE_OVERDUE = #{orgAttendQrCodeOverdue,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgAttendDescription != null" >
+        ORG_ATTEND_DESCRIPTION = #{orgAttendDescription, jdbcType=VARCHAR},
+      </if>
+      <if test="orgAttendQrCodeEffectiveDays != null" >
+        ORG_ATTEND_QR_CODE_EFFECTIVE_DAYS = #{orgAttendQrCodeEffectiveDays, jdbcType=INTEGER}
+      </if>
+    </set>
+    where PK_ORG_ATTEND_ID = #{pkOrgAttendId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.attend.domain.entity.AttendOrg" >
+    update t_org_attend
+    set ORG_ATTEND_NAME = #{orgAttendName,jdbcType=VARCHAR},
+      ORG_ATTEND_CREATE_BY_ID = #{orgAttendCreateById,jdbcType=BIGINT},
+      ORG_ATTEND_CREATE_TIME = #{orgAttendCreateTime,jdbcType=TIMESTAMP},
+      ORG_ATTEND_PEOPLE_NUM = #{orgAttendPeopleNum,jdbcType=INTEGER},
+      ORG_ATTEND_QR_CODE = #{orgAttendQrCode,jdbcType=VARCHAR},
+      ORG_ATTEND_QR_CODE_OVERDUE = #{orgAttendQrCodeOverdue,jdbcType=TIMESTAMP},
+      ORG_ATTEND_DESCRIPTION = #{orgAttendDescription, jdbcType=VARCHAR},
+      ORG_ATTEND_QR_CODE_EFFECTIVE_DAYS = #{orgAttendQrCodeEffectiveDays, jdbcType=INTEGER}
+    where PK_ORG_ATTEND_ID = #{pkOrgAttendId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

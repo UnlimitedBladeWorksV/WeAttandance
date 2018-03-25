@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script type="text/javascript" src="../../js/qrcode/jquery-1.4.2.min.js"></script>	
+		<script type="text/javascript" src="../../js/qrcode/jquery.qrcode.js"></script>  
+		<script type="text/javascript" src="../../js/qrcode/qrcode.js"></script>  
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/config.js"></script>
+		
+		<style>
+			/* 遮罩层*/
+		.mask{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			background: rgba(0,0,0,0.4);
+			z-index: 100;
+		}
+		.content{
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			height: 70%;
+			z-index: 101;	
+		}
+		#qrcodeTable{
+			width: 250px;
+			margin: auto;
+		}
+		.content p{
+			margin-top: 10px;
+			text-align: center;
+			color: #CCCCCC;
+			
+		}
+		.share{
+			position: absolute;
+			text-align: center;
+			bottom:10%;
+		}
+		.share img,.close img{
+			width: 25%;
+			height: 25%;
+		}
+		.share p,.close p{
+			color: #CCCCCC;
+		}
+		.close{
+			position: absolute;
+			text-align: center;
+			bottom:10%;
+			right: 0;
+		}
+		</style>
+	</head>
+
+	<body>
+		<div class="mask"></div>
+		<div class="content">
+			<div id="qrcodeTable"></div> 
+			<div class="share" id="share">
+					<img src="../../images/share.png"/>
+					<p>分享到</p>
+				</div>
+				<div class="close" id="close">
+					<img src="../../images/delete.png"/>
+					<p>关闭</p>
+			</div>	
+			
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		mui.init(); 
+		mui.plusReady(function(){
+			
+			var userId=getUserId();
+			var self = plus.webview.currentWebview();
+			var	orgId = self.orgId;
+			var dataJson={"orgAttendId":orgId,"userId":userId};
+			ajaxPostAuthorization("getOrgAttendQrCode",dataJson,sucessfulRegFinish,failRegFinish);
+		});
+		function sucessfulRegFinish(data){
+			var $$=jQuery.noConflict();
+ 			var code=data.code;
+ 			var msg=data.msg;
+ 			console.log(JSON.stringify(data));
+ 			if(code==200 || code==201){
+ 				var qrcode=data.data;
+ 				console.log("qrCode  "+qrcode);
+ 				$$(document).ready(function(){ 
+				    $$("#qrcodeTable").qrcode({ 
+				        render  : "table", 
+				        text    : qrcode,
+				        width:"250", 
+				        height:"250" 
+				    }); 
+				}); 
+ 			}else{
+ 				console.log(msg)
+ 			}
+ 		}
+ 		function failRegFinish(data){
+ 			alert("请求失败");
+ 		}
+		document.getElementById("close").addEventListener("tap",function (){
+			mui.back();
+		});
+		document.getElementById("share").addEventListener("tap",function (){
+			mui.back();
+		});
+	</script>
+	<script type="text/javascript" charset="utf-8">     
+        var shares=null; 
+        var Intent=null,File=null,Uri=null,main=null; 
+        // H5 plus事件处理 
+        function plusReady(){ 
+            updateSerivces(); 
+            if(plus.os.name=="Android"){ 
+                main = plus.android.runtimeMainActivity(); 
+                Intent = plus.android.importClass("android.content.Intent"); 
+                File = plus.android.importClass("java.io.File"); 
+                Uri = plus.android.importClass("android.net.Uri"); 
+            } 
+        } 
+        if(window.plus){ 
+            plusReady(); 
+        }else{ 
+            document.addEventListener("plusready",plusReady,false); 
+        }       
+        /** 
+         *  
+         * 更新分享服务 
+         */ 
+        function updateSerivces(){ 
+            plus.share.getServices( function(s){ 
+                shares={}; 
+                for(var i in s){ 
+                    var t=s[i]; 
+                    shares[t.id]=t; 
+                } 
+            }, function(e){ 
+                alert("获取分享服务列表失败："+e.message ); 
+            } ); 
+        } 
+         
+        /** 
+           * 分享操作 
+           * @param {JSON} sb 分享操作对象s.s为分享通道对象(plus.share.ShareService) 
+           * @param {Boolean} bh 是否分享链接 
+           */ 
+        function shareAction(sb,bh) { 
+            if(!sb||!sb.s){ 
+                alert("无效的分享服务！"); 
+                return; 
+            } 
+             
+            var msg={content:"sharehrefDes.value",extra:{scene:sb.x}}; 
+            if(bh){ 
+            //    msg.href=sharehref.value; 
+                msg.href="https://www.baidu.com"; 
+            //    if(sharehrefTitle&&sharehrefTitle.value!=""){ 
+                    msg.title="组织二维码"; 
+            //    } 
+            //    if(sharehrefDes&&sharehrefDes.value!=""){ 
+                    msg.content=""; 
+           //     } 
+                msg.thumbs=["../../images/qrPicture.png"]; 
+            //    msg.pictures=["_www/logo.png"]; 
+            	msg.pictures=["../../images/qrPicture.png"]; 
+            }else{ 
+                if(pic&&pic.realUrl){ 
+                    msg.pictures=[pic.realUrl]; 
+                } 
+            } 
+            // 发送分享 
+            if ( sb.s.authenticated ) { 
+                alert("---已授权---"); 
+                shareMessage(msg,sb.s); 
+            } else { 
+                alert("---未授权---"); 
+                sb.s.authorize( function(){ 
+                        shareMessage(msg,sb.s); 
+                    },function(e){ 
+                        alert("认证授权失败："+e.code+" - "+e.message ); 
+                }); 
+            } 
+        } 
+        /** 
+           * 发送分享消息 
+           * @param {JSON} msg 
+           * @param {plus.share.ShareService} s 
+           */ 
+        function shareMessage(msg,s){ 
+             
+            alert(JSON.stringify(msg)); 
+            s.send( msg, function(){ 
+                alert("分享到\""+s.description+"\"成功！ " ); 
+                 
+            }, function(e){ 
+                alert( "分享到\""+s.description+"\"失败: "+JSON.stringify(e) ); 
+             
+            } ); 
+        } 
+        // 分析链接 B5教程网 www.bcty365.com 
+        function shareHref(){ 
+            var shareBts=[]; 
+            // 更新分享列表 
+            var ss=shares['weixin']; 
+            ss&&ss.nativeClient&&(shareBts.push({title:'微信朋友圈',s:ss,x:'WXSceneTimeline'}), 
+            shareBts.push({title:'微信好友',s:ss,x:'WXSceneSession'})); 
+            ss=shares['qq']; 
+            ss&&ss.nativeClient&&shareBts.push({title:'QQ',s:ss}); 
+            // 弹出分享列表 
+            shareBts.length>0?plus.nativeUI.actionSheet({title:'分享二维码',cancel:'取消',buttons:shareBts},function(e){ 
+                (e.index>0)&&shareAction(shareBts[e.index-1],true); 
+            }):plus.nativeUI.alert('当前环境无法支持分享链接操作!'); 
+        } 
+        document.getElementById("share").addEventListener("tap",function (){
+			shareHref();
+		});
+    </script>  
+</html>

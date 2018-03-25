@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<!--标准mui.css-->
+	<link rel="stylesheet" href="../../css/mui.min.css"> <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script src="../../js/mui.min.js"></script> 
+	<script src="../../js/config.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    </script>
+    <style>
+    	html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+		#topPopover {
+			position: fixed;
+			top: 16px;
+			right: 6px;
+		}
+		#topPopover .mui-popover-arrow {
+			left: auto;
+			right: 6px;
+		}
+		
+		.mui-popover {
+			height: 280px;
+			width: 200px;
+			position: relative;
+			left: 10%;
+		}
+		.mui-content {
+			
+		}
+		.mui-media-body{
+			height: 40px;
+			line-height: 40px;
+			font-size: 20px;
+		}
+		#search{
+			margin-top: 10px;
+		}
+		.p_title{
+			color: #000000;
+			font-size: 18px;		
+		}
+		.p_content{
+			font-size: 14px;
+		}
+		.topcolor2{
+			height: 3rem;
+			line-height: 3rem;
+			background: #1389FE;
+			font-size: 1rem;
+			color: #fff;
+			text-align: center
+		}
+		.back {
+			padding-left: 1.125rem;
+			position: absolute;
+			top: 0;
+			left: 0
+		}
+		.back i {
+			width: .75rem;
+			height: 1.25rem;
+			margin-top: .875rem;
+			background: url(../../images/log_reg_back.png) no-repeat;
+			background-size: 100%;
+			display: block
+		}
+    </style>
+</head>
+<body>
+		<header class="mui-bar mui-bar-nav topcolor2">
+			<a class="back mui-action-back" id="goBack"><i></i></a>
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+			<h1 class="mui-title toptextcolor" id="orgTitle">考勤组织</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view" id="ul_Attend">
+			</ul>			
+        </div>
+		<!--右上角弹出菜单-->
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell">
+							<a href="#">
+								<img src="../../images/add.png" class="mui-media-object mui-pull-left"/>
+								<div class="mui-media-body">新建考勤</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#">
+								<img src="../../images/people.png" class="mui-media-object mui-pull-left"/>
+								<div class="mui-media-body">人员管理</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell" id="shareAndJoin">
+							<a href="#">
+								<img src="../../images/qrcode.png" class="mui-media-object mui-pull-left"/>
+								<div class="mui-media-body">分享加入</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell">
+							<a href="#">
+								<img src="../../images/delete2.png" class="mui-media-object mui-pull-left"/>
+								<div class="mui-media-body">删除组织</div>
+							</a>
+						</li>			
+					</ul>
+				</div>
+			</div>
+		</div>
+	<script>
+		mui.init();
+		//ul点击事件
+		mui(".mui-table-view").on('tap','.mui-table-view-cell',function(){		
+			  //获取id
+			var id = this.getAttribute("id");
+			mui.openWindow({
+				url:'../scan/attendCode.html',
+				extras:{
+			        attendId:id	       
+			    }
+			});
+		}); 
+		/**
+		 *   传过来三个参数
+		 *    组织ID 组织名称  组织二维码
+		 */
+		var orgId;
+		mui.plusReady(function () {
+			var self = plus.webview.currentWebview();
+			orgId = self.orgId;
+			var attendName = self.attendName; 
+			document.getElementById("orgTitle").innerText=attendName;
+			console.log("orgId==="+orgId);
+			var serveUrl=getServerUrl()+"getAttendItemsByClickOrgAttend";
+		    var authorization=getAuthorization();
+		    mui.ajax(serveUrl,{
+	  		data: {
+				'orgAttendId':orgId
+			},
+			dataType:'json',//服务器返回json格式数据   text 文本类型
+			type:'get',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			headers:{
+	      			'content-type': 'application/json; charset=utf-8',
+	      			"Authorization": authorization
+	    		},  
+			success:function(data){
+				//服务器返回响应，根据响应结果，分析是否登录成功；
+				console.log("orgManager2 getAttend=="+JSON.stringify(data));				
+				attend_data_fill(data);
+			//    plus.storage.setItem("AttendData"+id,JSON.stringify(data));
+			},
+			error:function(xhr,type,errorThrown){
+				//异常处理；
+				mui.plusReady(function(){
+					console.log("请求地址错误错误");
+					console.log(type);
+				});
+				
+			//	plus.nativeUI.closeWaiting();
+				alert("请求错误");
+			}
+		});
+		});
+			//填充考勤信息
+		function attend_data_fill(attend_data){
+			var attends=attend_data.data;
+			var list="";
+			for(var i=0,l=attends.length;i<l;i++){
+				var attendId=attends[i]["attendId"];
+				var attendName=attends[i]["attendTitle"];
+				var attendLocation=attends[i]["attendLocation"];
+				var startWorkDate=attends[i]["attendStartTime"];
+				var overWorkDate=attends[i]["attendOverTime"];
+				var timeSlot=getLocalTime(startWorkDate,overWorkDate);
+				list+= "    <li class=\"mui-table-view-cell\"  id=\""+attendId+"\" >"
+					+	"	<img src=\"../../images/right.png\" class=\"mui-pull-right mui-media-object\"/>"
+					+	"		<div> "
+					+	"			<p>"+attendName+"</p>"
+					+	"			<p>"+timeSlot+"   "+attendLocation+"</p>"
+					+	"		</div>"
+					+	"	</li>"
+			}
+			document.getElementById("ul_Attend").innerHTML=list;
+		}
+			// 将时间戳转为普通日期格式
+		function getLocalTime(startTime,overTime) {  		
+	   		// 将时间戳转为普通日期格式				
+			   var startdate = new Date(startTime);
+			   var overdate = new Date(overTime);
+			   var start_time = startdate.toLocaleTimeString();
+			   var over_time = overdate.toLocaleTimeString();
+			   var str_date = startdate.toLocaleDateString();			 
+			   var result=str_date+" "+start_time+"----"+over_time;			 
+			  return result;
+		}
+		// 将时间戳转为普通日期格式
+		function getTimeFromDate(time) {  		
+	   		// 将时间戳转为普通日期格式				
+			   var strdate = new Date(time);	
+			   var result= strdate.toLocaleString();	 
+			 return result;
+		}
+		document.getElementById("shareAndJoin").addEventListener("tap",function(){
+			mui.openWindow({
+				url:'../scan/orgQrCode.html',
+				extras:{
+			        orgId:orgId
+		    	}
+			});
+		});
+		
+		mui('.mui-scroll-wrapper').scroll();
+		mui('body').on('shown', '.mui-popover', function(e) {
+			//console.log('shown', e.detail.id);//detail为当前popover元素
+		});
+		mui('body').on('hidden', '.mui-popover', function(e) {
+			//console.log('hidden', e.detail.id);//detail为当前popover元素
+		});
+	</script>
+</body>
+</html>
+<!--
+	<li class="mui-table-view-cell">
+					<img src="../images/right.png" class="mui-pull-right mui-media-object"/>
+					<div>
+						<p class="p_title">例行会议</p>
+						<p class="p_content">周五9：00-9：10  会议室</p>
+					</div>
+				</li>
+	
+->

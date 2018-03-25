@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<style>
+			.textStyle{
+				position: absolute;
+				font-family: "微软雅黑";
+			}
+			.left-sign{
+				left: 50%;
+				margin-left:-9rem ;
+			}
+			.right-sign{
+				left: 50%;
+			}
+			.biglabel{
+				font-size: 2.6rem;
+				top: 4.5rem;
+				left: 50%;
+				right: 50%;
+				margin-left: -7rem;
+				margin-right: -7rem;
+			    color: #007AFF;
+			}
+			.signFull{
+				font-size: 1.4rem;
+				top: 8.5rem;
+			}
+			.signOrg{
+				top: 11rem;
+			}
+			.signAtt{
+				top: 13rem;
+			}
+			.signTime{
+				top: 15rem;
+			}
+			.signSta{
+				top: 17rem;
+			}
+			.signButton{
+				width: 88%;
+				height: 3rem;
+				color:#FFFFFF;
+				font-size: 1.2rem;
+				left: 6%;
+				top: 20rem;
+				background-color: #66BBFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<label class="biglabel textStyle">签到成功啦!</label>
+		<label class="signFull textStyle left-sign">签到信息：</label>
+		<label class="signOrg textStyle left-sign">所属组织：</label>
+		<label class="signOrg textStyle right-sign" id="orgAttendName"></label>
+		<label class="signAtt textStyle left-sign">所属考勤：</label>
+		<label class="signAtt textStyle right-sign" id="attendTitle"></label>
+		<label class="signTime textStyle left-sign">签到时间：</label>
+		<label class="signTime textStyle right-sign" id="attendTime"></label>
+		<label class="signSta textStyle left-sign">考勤状态：</label>
+		<label class="signSta textStyle right-sign" id="attendState"></label>
+		<button class="signButton textStyle" id="goHome">返回首页</button>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+				var self=plus.webview.currentWebview();
+				var attendTitle=self.attendTitle;
+				var orgAttendName=self.orgAttendName;
+				var attendTime=self.attendTime;
+				var time=new Date();
+				time.setTime(attendTime);
+				var dateTime=time.toLocaleTimeString();
+				console.log(dateTime);
+				var attendState=self.attendState;
+				console.log("attendTitle="+attendTitle+" orgAttendName="+
+				orgAttendName+"attendTime:"+attendTime+"attendState:"+attendState);
+				var stateJson={"True":"实到","Late":"迟到","False":"缺勤","Should":"应到"};
+				document.getElementById("attendTitle").innerText=attendTitle;
+				document.getElementById("orgAttendName").innerText=orgAttendName;
+				document.getElementById("attendState").innerText=stateJson[attendState];
+				document.getElementById("attendTime").innerText=dateTime;
+			});
+			document.getElementById("goHome").addEventListener("tap",function(){
+				mui.openWindow({
+					url:"../index/home.html"
+				});
+			});
+		</script>
+	</body>
+
+</html>

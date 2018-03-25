@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.attend.mapper.UserOrgAttendMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.attend.domain.entity.UserOrgAttend" >
+    <constructor >
+      <idArg column="FK_USER_ID" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <idArg column="FK_ORG_ATTEND_ID" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="USER_ATTEND_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ATTEND_TRUE_NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ATTEND_LATE_NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ATTEND_FALSE_NUM" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FK_USER_ID, FK_ORG_ATTEND_ID, USER_ATTEND_TIME, ATTEND_TRUE_NUM, ATTEND_LATE_NUM, 
+    ATTEND_FALSE_NUM
+  </sql>
+  <sql id="Fk_User_Id_Column" >
+    FK_USER_ID
+  </sql>
+  <sql id="Fk_Org_Attend_Id_Column" >
+    FK_ORG_ATTEND_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.demo.attend.domain.entity.UserOrgAttendKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_org_attend
+    where FK_USER_ID = #{fkUserId,jdbcType=BIGINT}
+      and FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT}
+  </select>
+  <select id="selectUsersByFkOrgAttendId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user_org_attend
+    where FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT}
+  </select>
+  <select id="selectOrgAttendsByFkUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user_org_attend
+    where FK_USER_ID = #{fkUserId,jdbcType=BIGINT}
+  </select>
+  <select id="selectUserIdsByFkOrgAttendId" resultType="java.lang.Long" parameterType="java.lang.Long">
+    select
+    <include refid="Fk_User_Id_Column" />
+    from t_user_org_attend
+    where FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT}
+  </select>
+  <select id="selectOrgAttendIdsByFkUserId" resultType="java.lang.Long" parameterType="java.lang.Long">
+    select
+    <include refid="Fk_Org_Attend_Id_Column" />
+    from t_user_org_attend
+    where FK_USER_ID = #{fkUserId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="com.demo.attend.domain.entity.UserOrgAttendKey" >
+    delete from t_user_org_attend
+    where FK_USER_ID = #{fkUserId,jdbcType=BIGINT}
+      and FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFkOrgAttendId" parameterType="java.lang.Long" >
+    delete from t_user_org_attend
+    where FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.demo.attend.domain.entity.UserOrgAttend" >
+    insert into t_user_org_attend (FK_USER_ID, FK_ORG_ATTEND_ID, USER_ATTEND_TIME, 
+      ATTEND_TRUE_NUM, ATTEND_LATE_NUM, ATTEND_FALSE_NUM
+      )
+    values (#{fkUserId,jdbcType=BIGINT}, #{fkOrgAttendId,jdbcType=BIGINT}, #{userAttendTime,jdbcType=TIMESTAMP}, 
+      #{attendTrueNum,jdbcType=INTEGER}, #{attendLateNum,jdbcType=INTEGER}, #{attendFalseNum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.attend.domain.entity.UserOrgAttend" >
+    insert into t_user_org_attend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fkUserId != null" >
+        FK_USER_ID,
+      </if>
+      <if test="fkOrgAttendId != null" >
+        FK_ORG_ATTEND_ID,
+      </if>
+      <if test="userAttendTime != null" >
+        USER_ATTEND_TIME,
+      </if>
+      <if test="attendTrueNum != null" >
+        ATTEND_TRUE_NUM,
+      </if>
+      <if test="attendLateNum != null" >
+        ATTEND_LATE_NUM,
+      </if>
+      <if test="attendFalseNum != null" >
+        ATTEND_FALSE_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fkUserId != null" >
+        #{fkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="fkOrgAttendId != null" >
+        #{fkOrgAttendId,jdbcType=BIGINT},
+      </if>
+      <if test="userAttendTime != null" >
+        #{userAttendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendTrueNum != null" >
+        #{attendTrueNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendLateNum != null" >
+        #{attendLateNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendFalseNum != null" >
+        #{attendFalseNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.attend.domain.entity.UserOrgAttend" >
+    update t_user_org_attend
+    <set >
+      <if test="userAttendTime != null" >
+        USER_ATTEND_TIME = #{userAttendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attendTrueNum != null" >
+        ATTEND_TRUE_NUM = #{attendTrueNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendLateNum != null" >
+        ATTEND_LATE_NUM = #{attendLateNum,jdbcType=INTEGER},
+      </if>
+      <if test="attendFalseNum != null" >
+        ATTEND_FALSE_NUM = #{attendFalseNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where FK_USER_ID = #{fkUserId,jdbcType=BIGINT}
+      and FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.attend.domain.entity.UserOrgAttend" >
+    update t_user_org_attend
+    set USER_ATTEND_TIME = #{userAttendTime,jdbcType=TIMESTAMP},
+      ATTEND_TRUE_NUM = #{attendTrueNum,jdbcType=INTEGER},
+      ATTEND_LATE_NUM = #{attendLateNum,jdbcType=INTEGER},
+      ATTEND_FALSE_NUM = #{attendFalseNum,jdbcType=INTEGER}
+    where FK_USER_ID = #{fkUserId,jdbcType=BIGINT}
+      and FK_ORG_ATTEND_ID = #{fkOrgAttendId,jdbcType=BIGINT}
+  </update>
+</mapper>

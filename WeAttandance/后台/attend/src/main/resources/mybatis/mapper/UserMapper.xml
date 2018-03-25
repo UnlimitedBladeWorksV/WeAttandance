@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.attend.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.demo.attend.domain.entity.User" >
+    <constructor >
+      <idArg column="PK_USER_ID" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="USER_EMAIL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USER_PASSWD" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USER_USER_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USER_PHONE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USER_SEX" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="USER_IS_LOGIN" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="USER_REGISTER_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="USER_DESCRIPTION" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USER_TRUE_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USER_AUTHORITY" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="USER_LAST_RESET_PASSWD_TIME" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PK_USER_ID, USER_EMAIL, USER_PASSWD, USER_USER_NAME, USER_PHONE, USER_SEX, USER_IS_LOGIN, 
+    USER_REGISTER_TIME, USER_DESCRIPTION, USER_TRUE_NAME, USER_AUTHORITY, USER_LAST_RESET_PASSWD_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  select
+  <include refid="Base_Column_List" />
+  from t_user
+  where PK_USER_ID = #{pkUserId,jdbcType=BIGINT}
+</select>
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where USER_EMAIL = #{userEmail,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where USER_USER_NAME = #{userUserName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user
+    where PK_USER_ID = #{pkUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.demo.attend.domain.entity.User" >
+    insert into t_user (PK_USER_ID, USER_EMAIL, USER_PASSWD, 
+      USER_USER_NAME, USER_PHONE, USER_SEX, 
+      USER_IS_LOGIN, USER_REGISTER_TIME, USER_DESCRIPTION, 
+      USER_TRUE_NAME, USER_AUTHORITY, USER_LAST_RESET_PASSWD_TIME
+      )
+    values (#{pkUserId,jdbcType=BIGINT}, #{userEmail,jdbcType=VARCHAR}, #{userPasswd,jdbcType=VARCHAR}, 
+      #{userUserName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userSex,jdbcType=BIT}, 
+      #{userIsLogin,jdbcType=BIT}, #{userRegisterTime,jdbcType=TIMESTAMP}, #{userDescription,jdbcType=VARCHAR}, 
+      #{userTrueName,jdbcType=VARCHAR}, #{userAuthority,jdbcType=VARCHAR}, #{userLastResetPasswdTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.attend.domain.entity.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkUserId != null" >
+        PK_USER_ID,
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL,
+      </if>
+      <if test="userPasswd != null" >
+        USER_PASSWD,
+      </if>
+      <if test="userUserName != null" >
+        USER_USER_NAME,
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE,
+      </if>
+      <if test="userSex != null" >
+        USER_SEX,
+      </if>
+      <if test="userIsLogin != null" >
+        USER_IS_LOGIN,
+      </if>
+      <if test="userRegisterTime != null" >
+        USER_REGISTER_TIME,
+      </if>
+      <if test="userDescription != null" >
+        USER_DESCRIPTION,
+      </if>
+      <if test="userTrueName != null" >
+        USER_TRUE_NAME,
+      </if>
+      <if test="userAuthority != null" >
+        USER_AUTHORITY,
+      </if>
+      <if test="userLastResetPasswdTime != null" >
+        USER_LAST_RESET_PASSWD_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkUserId != null" >
+        #{pkUserId,jdbcType=BIGINT},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPasswd != null" >
+        #{userPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="userUserName != null" >
+        #{userUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        #{userSex,jdbcType=BIT},
+      </if>
+      <if test="userIsLogin != null" >
+        #{userIsLogin,jdbcType=BIT},
+      </if>
+      <if test="userRegisterTime != null" >
+        #{userRegisterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userDescription != null" >
+        #{userDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userTrueName != null" >
+        #{userTrueName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAuthority != null" >
+        #{userAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="userLastResetPasswdTime != null" >
+        #{userLastResetPasswdTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.attend.domain.entity.User" >
+    update t_user
+    <set >
+      <if test="userEmail != null" >
+        USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPasswd != null" >
+        USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="userUserName != null" >
+        USER_USER_NAME = #{userUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null" >
+        USER_SEX = #{userSex,jdbcType=BIT},
+      </if>
+      <if test="userIsLogin != null" >
+        USER_IS_LOGIN = #{userIsLogin,jdbcType=BIT},
+      </if>
+      <if test="userRegisterTime != null" >
+        USER_REGISTER_TIME = #{userRegisterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userDescription != null" >
+        USER_DESCRIPTION = #{userDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userTrueName != null" >
+        USER_TRUE_NAME = #{userTrueName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAuthority != null" >
+        USER_AUTHORITY = #{userAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="userLastResetPasswdTime != null" >
+        USER_LAST_RESET_PASSWD_TIME = #{userLastResetPasswdTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PK_USER_ID = #{pkUserId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.attend.domain.entity.User" >
+    update t_user
+    set USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},
+      USER_USER_NAME = #{userUserName,jdbcType=VARCHAR},
+      USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      USER_SEX = #{userSex,jdbcType=BIT},
+      USER_IS_LOGIN = #{userIsLogin,jdbcType=BIT},
+      USER_REGISTER_TIME = #{userRegisterTime,jdbcType=TIMESTAMP},
+      USER_DESCRIPTION = #{userDescription,jdbcType=VARCHAR},
+      USER_TRUE_NAME = #{userTrueName,jdbcType=VARCHAR},
+      USER_AUTHORITY = #{userAuthority,jdbcType=VARCHAR},
+      USER_LAST_RESET_PASSWD_TIME = #{userLastResetPasswdTime,jdbcType=TIMESTAMP}
+    where PK_USER_ID = #{pkUserId,jdbcType=BIGINT}
+  </update>
+</mapper>
